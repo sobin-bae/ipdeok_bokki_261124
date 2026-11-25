@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장바구니 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../detail/detail.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span>입덕볶이 메뉴</span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../../index.html"><span>🏠 홈으로</span><span>›</span></a>
+          <a href="../lists/lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
+          <a href="../detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="../payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="../payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30
+      </div>
+    </aside>
+
+    <section class="cart-section">
+      <div class="cart-head">
+        <h1>장바구니 <span id="cartCount">(0)</span></h1>
+        <div class="cart-head-actions">
+          <button type="button" class="btn-clear-all" id="clearAllBtn">전체 삭제</button>
+          <a href="../lists/lists.html" class="add-more-link">+ 메뉴 더 담기</a>
+        </div>
+      </div>
+
+      <div id="cartItemsContainer"></div>
+
+      <div class="cart-summary-card">
+        <h2>주문 금액 확인</h2>
+        <div class="summary-row">
+          <span>총 상품 금액</span>
+          <strong id="itemsTotalText">0원</strong>
+        </div>
+        <div class="summary-row">
+          <span>배달팁</span>
+          <strong id="deliveryFeeText">0원</strong>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <span>결제 예정 금액</span>
+          <strong id="grandTotalText">0원</strong>
+        </div>
+      </div>
+
+      <div class="cart-bottom-area">
+        <a href="../payment/payment.html" class="btn-action-red" id="goPaymentBtn">
+          주문하기
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script src="../../app.js"></script>
+  <script>
+    const DELIVERY_FEE = 3000;
+    const container = document.getElementById('cartItemsContainer');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    function renderCart() {
+      const cart = getCart();
+      const totalQty = cart.reduce((s, it) => s + (it.qty || 1), 0);
+      document.getElementById('cartCount').textContent = `(${totalQty})`;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cart-box">
+            <p>장바구니가 비어 있습니다.</p>
+            <a href="../lists/lists.html" class="btn-empty-go">메뉴 담으러 가기</a>
+          </div>
+        `;
+        document.getElementById('itemsTotalText').textContent = '0원';
+        document.getElementById('deliveryFeeText').textContent = '0원';
+        document.getElementById('grandTotalText').textContent = '0원';
+        document.getElementById('goPaymentBtn').textContent = '0원 주문하기';
+        return;
+      }
+
+      let itemSum = 0;
+      container.innerHTML = cart.map((item, idx) => {
+        const linePrice = item.unitPrice * item.qty;
+        itemSum += linePrice;
+        const optText = item.toppings && item.toppings.length > 0
+          ? `맵기: ${item.spice} / 추가: ${item.toppings.join(', ')}`
+          : `맵기: ${item.spice}`;
+
+        return `
+          <div class="cart-item-card">
+            <img src="${resolveAsset(item.img)}" alt="${item.name}">
+            <div class="cart-item-info">
+              <div class="cart-item-top">
+                <h3>${item.name}</h3>
+                <button type="button" class="btn-del" onclick="removeItem(${idx})">삭제</button>
+              </div>
+              <p class="cart-opt">${optText}</p>
+              <div class="cart-item-bottom">
+                <strong>${formatPrice(linePrice)}</strong>
+                <div class="qty-box">
+                  <button type="button" onclick="changeQty(${idx}, -1)">-</button>
+                  <span>${item.qty}</span>
+                  <button type="button" onclick="changeQty(${idx}, 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const grandTotal = itemSum + DELIVERY_FEE;
+      document.getElementById('itemsTotalText').textContent = formatPrice(itemSum);
+      document.getElementById('deliveryFeeText').textContent = formatPrice(DELIVERY_FEE);
+      document.getElementById('grandTotalText').textContent = formatPrice(grandTotal);
+      document.getElementById('goPaymentBtn').textContent = `${formatPrice(grandTotal)} 주문하기`;
+    }
+
+    window.changeQty = function(idx, delta) {
+      const cart = getCart();
+      if (!cart[idx]) return;
+      cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+      saveCart(cart);
+      renderCart();
+    };
+
+    window.removeItem = function(idx) {
+      const cart = getCart();
+      cart.splice(idx, 1);
+      saveCart(cart);
+      renderCart();
+    };
+
+    clearAllBtn.addEventListener('click', () => {
+      clearCart();
+      renderCart();
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>

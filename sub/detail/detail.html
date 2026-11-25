@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메뉴 상세 & 옵션 선택 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../lists/lists.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          🛒<span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span>입덕볶이 메뉴</span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../../index.html"><span>🏠 홈으로</span><span>›</span></a>
+          <a href="../lists/lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
+          <a href="detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="../cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="../payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="../payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30
+      </div>
+    </aside>
+
+    <div class="detail-hero">
+      <img id="detailImg" src="../../images/tteokbokki-main.png" alt="떡볶이 메뉴 사진">
+    </div>
+
+    <section class="detail-info">
+      <div class="detail-title-row">
+        <h1 id="detailName">눈꽃치즈 매운 떡볶이</h1>
+        <span class="detail-base-price" id="detailPrice">10,500원</span>
+      </div>
+      <p class="detail-desc" id="detailDesc">
+        화끈하게 매운 특제 양념 위로 100% 자연산 모짜렐라 눈꽃치즈를 아낌없이 올렸습니다. 매콤함과 고소한 치즈의 완벽한 단짠·맵느 조합을 경험해 보세요.
+      </p>
+    </section>
+
+    <section class="option-group">
+      <div class="option-header">
+        <h2>맛 선택</h2>
+        <span class="required-pill">필수</span>
+      </div>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="radio" name="spice" value="순한맛">
+          <span>🌶️ 순한맛</span>
+        </div>
+        <span class="option-price">+0원</span>
+      </label>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="radio" name="spice" value="보통맛" checked>
+          <span>🌶️🌶️ 보통맛</span>
+        </div>
+        <span class="option-price">+0원</span>
+      </label>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="radio" name="spice" value="매운맛">
+          <span>🌶️🌶️🌶️ 매운맛</span>
+        </div>
+        <span class="option-price">+0원</span>
+      </label>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="radio" name="spice" value="아주 매운맛">
+          <span>🔥 아주 매운맛</span>
+        </div>
+        <span class="option-price">+0원</span>
+      </label>
+    </section>
+
+    <section class="option-group">
+      <div class="option-header">
+        <h2>토핑 추가</h2>
+        <span class="optional-pill">선택</span>
+      </div>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="checkbox" class="topping-chk" value="치즈 추가" data-price="1500">
+          <span>🧀 치즈 추가</span>
+        </div>
+        <span class="option-price">+1,500원</span>
+      </label>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="checkbox" class="topping-chk" value="분모자 추가" data-price="2000">
+          <span>🥢 분모자 추가</span>
+        </div>
+        <span class="option-price">+2,000원</span>
+      </label>
+      <label class="option-item">
+        <div class="option-left">
+          <input type="checkbox" class="topping-chk" value="주먹밥 추가" data-price="1500">
+          <span>🍙 주먹밥 추가</span>
+        </div>
+        <span class="option-price">+1,500원</span>
+      </label>
+    </section>
+
+    <div class="detail-bottom-bar">
+      <button type="button" class="btn-action-red" id="addToCartBtn">
+        10,500원 장바구니 담기
+      </button>
+    </div>
+  </div>
+
+  <script src="../../app.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const menuKey = params.get('menu') || 'cheese';
+    const currentMenu = MENU_DATA[menuKey] || MENU_DATA.cheese;
+
+    document.getElementById('detailImg').src = resolveAsset(currentMenu.img);
+    document.getElementById('detailName').textContent = currentMenu.name;
+    document.getElementById('detailPrice').textContent = formatPrice(currentMenu.price);
+    document.getElementById('detailDesc').textContent = currentMenu.desc;
+
+    const toppingChks = document.querySelectorAll('.topping-chk');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+
+    function calcTotal() {
+      let extra = 0;
+      toppingChks.forEach((chk) => {
+        if (chk.checked) extra += Number(chk.dataset.price);
+      });
+      const total = currentMenu.price + extra;
+      addToCartBtn.textContent = `${formatPrice(total)} 장바구니 담기`;
+      return total;
+    }
+
+    toppingChks.forEach((chk) => chk.addEventListener('change', calcTotal));
+    calcTotal();
+
+    addToCartBtn.addEventListener('click', () => {
+      const selectedSpice = document.querySelector('input[name="spice"]:checked')?.value || '보통맛';
+      const selectedToppings = [];
+      let extra = 0;
+
+      toppingChks.forEach((chk) => {
+        if (chk.checked) {
+          selectedToppings.push(`${chk.value}(+${formatPrice(chk.dataset.price)})`);
+          extra += Number(chk.dataset.price);
+        }
+      });
+
+      const cart = getCart();
+      cart.push({
+        id: currentMenu.id,
+        name: currentMenu.name,
+        img: currentMenu.img,
+        basePrice: currentMenu.price,
+        spice: selectedSpice,
+        toppings: selectedToppings,
+        unitPrice: currentMenu.price + extra,
+        qty: 1
+      });
+      saveCart(cart);
+      location.href = '../cart/cart.html';
+    });
+  </script>
+</body>
+</html>

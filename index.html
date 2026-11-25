@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 한 입에 반하는 매콤달콤 떡볶이</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <a href="index.html" class="logo-link">
+          <img src="Imgs/logo-mascot.png" alt="입덕볶이 캐릭터 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="sub/cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          🛒<span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="Imgs/logo-mascot.png"로고 class="logo-img">
+            <span>입덕볶이 메뉴</span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="index.html"><span>🏠 홈으로</span><span>›</span></a>
+          <a href="sub/lists/lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
+          <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30 (연중무휴)<br>
+        주문문의 1588-8253
+      </div>
+    </aside>
+
+    <!-- 상단 히어로 배너 -->
+    <section class="hero-banner">
+      <img src="Imgs/tteokbokki-main.png" alt="입덕볶이 대표 떡볶이">
+      <div class="hero-overlay">
+        <span class="hero-badge">오늘의 인기 1위</span>
+        <h1>한 입 먹는 순간 바로 입덕!<br>특제 숙성 국물 떡볶이</h1>
+      </div>
+    </section>
+
+    <!-- Section 1: 주문 및 쿠폰 버튼 -->
+    <section class="section-order">
+      <div class="order-btn-group">
+        <a href="sub/lists/lists.html" class="btn-order btn-primary btn-full">🛵 배달 주문하기</a>
+        <div class="btn-half-row">
+          <a href="tel:1588-8253" class="btn-order btn-secondary btn-half">📞 전화 주문</a>
+          <a href="#eventSection" class="btn-order btn-accent btn-half">🎟️ 쿠폰 사용</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 추천 메뉴 -->
+    <section class="section-recommend">
+      <div class="section-head">
+        <h2>추천 메뉴</h2>
+        <div class="arrow-controls">
+          <button type="button" class="arrow-btn" id="recPrevBtn" aria-label="이전 추천 메뉴">‹</button>
+          <button type="button" class="arrow-btn" id="recNextBtn" aria-label="다음 추천 메뉴">›</button>
+        </div>
+      </div>
+
+      <div class="recommend-track" id="recommendTrack">
+        <a href="sub/detail/detail.html?menu=original" class="rec-card" data-index="0">
+          <span class="rec-tag">BEST 1</span>
+          <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=500&q=80" alt="입덕 오리지널 떡볶이">
+          <h3>입덕 오리지널</h3>
+          <p>8,500원</p>
+        </a>
+        <a href="sub/detail/detail.html?menu=cheese" class="rec-card active" data-index="1">
+          <span class="rec-tag">BEST 2</span>
+          <img src="Imgs/tteokbokki-main.png" alt="눈꽃치즈 매운 떡볶이">
+          <h3>눈꽃치즈 매운 떡볶이</h3>
+          <p>10,500원</p>
+        </a>
+        <a href="sub/detail/detail.html?menu=rose" class="rec-card" data-index="2">
+          <span class="rec-tag">BEST 3</span>
+          <img src="Imgs/tteokbokki-rose.png" alt="베이컨 로제 떡볶이">
+          <h3>베이컨 로제 떡볶이</h3>
+          <p>11,500원</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 3: 메뉴 그리드 -->
+    <section class="section-menu">
+      <div class="section-head">
+        <h2>메뉴</h2>
+        <a href="sub/lists/lists.html" class="more-link">전체보기 ›</a>
+      </div>
+      <div class="menu-grid">
+        <a href="sub/detail/detail.html?menu=original" class="menu-card">
+          <img src=https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=400&q=80" alt="입덕 오리지널 떡볶이">
+          <div class="menu-card-info">
+            <strong>입덕 오리지널</strong>
+            <span>8,500원</span>
+          </div>
+        </a>
+        <a href="sub/detail/detail.html?menu=buldak" class="menu-card">
+          <img src="Imgs/tteokbokki-buldak.png" alt="화끈 불닭맛 폭탄 떡볶이">
+          <div class="menu-card-info">
+            <strong>화끈 불닭맛</strong>
+            <span>9,500원</span>
+          </div>
+        </a>
+        <a href="sub/detail/detail.html?menu=rose" class="menu-card">
+          <img src="Imgs/tteokbokki-rose.png" alt="베이컨 로제 떡볶이">
+          <div class="menu-card-info">
+            <strong>베이컨 로제</strong>
+            <span>11,500원</span>
+          </div>
+        </a>
+        <a href="sub/detail/detail.html?menu=side" class="menu-card fried-card-fix">
+      <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="바삭 모둠 튀김">
+      <div class="fried-card-text">
+      <strong class="fried-title">바삭 모둠 튀김</strong>
+      <span class="fried-price">10,500원</span>
+    </div>
+      </a>
+      </div>
+    </section>
+
+    <!-- Section 4: 이벤트 -->
+    <section class="section-event" id="eventSection">
+      <div class="section-head">
+        <h2>이벤트</h2>
+        <div class="event-tabs">
+          <button type="button" class="event-tab active" data-tab="ongoing">진행중</button>
+          <button type="button" class="event-tab" data-tab="ended">종료</button>
+          <button type="button" class="event-tab" data-tab="winner">당첨자</button>
+        </div>
+      </div>
+
+      <div class="event-panel active" id="panel-ongoing">
+        <div class="event-banner-card">
+          <img src="Imgs/tteokbokki-main.png" alt="첫 주문 할인 쿠폰 이벤트">
+          <div class="event-banner-body">
+            <span class="event-pill ongoing">진행중</span>
+            <h3>첫 주문 고객 3,000원 즉시 할인 쿠폰 증정!</h3>
+            <p>결제 단계에서 쿠폰을 선택하면 바로 할인 적용됩니다. (2026.11.01 ~ 12.31)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-panel" id="panel-ended">
+        <div class="event-banner-card ended">
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80" alt="종료된 이벤트">
+          <div class="event-banner-body">
+            <span class="event-pill ended">종료됨</span>
+            <h3>[마감] 오픈 기념 매운맛 떡볶이 1+1 프로모션</h3>
+            <p>많은 성원에 감사드리며 준비된 수량 소진으로 이벤트가 종료되었습니다. (2026.10.01 ~ 10.31)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-panel" id="panel-winner">
+        <div class="winner-box">
+          <span class="event-pill winner">당첨자 발표</span>
+          <h3>🎉 11월 포토리뷰 '입덕왕' 당첨자 안내</h3>
+          <p class="winner-sub">당첨되신 분들께는 입덕볶이 10,000원 모바일 상품권이 자동 발송되었습니다.</p>
+          <ul class="winner-list">
+            <li><span>떡볶이러버**</span><span>010-****-4821</span></li>
+            <li><span>매운맛고수**</span><span>010-****-9104</span></li>
+            <li><span>치즈폭탄조아**</span><span>010-****-3379</span></li>
+            <li><span>야식은입덕**</span><span>010-****-7512</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <strong>(주)입덕볶이 에프앤비</strong>
+      인천광역시 연수구 송도동 123-45 | 대표: 김입덕<br>
+      고객센터: 1588-8253 | Copyright © IPDEOKBOKKI. All rights reserved.
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    const cards = document.querySelectorAll('.rec-card');
+    let currentRec = 1;
+
+    function renderRecommend(idx) {
+      cards.forEach((c, i) => {
+        c.classList.toggle('active', i === idx);
+      });
+    }
+
+    document.getElementById('recPrevBtn').addEventListener('click', () => {
+      currentRec = (currentRec - 1 + cards.length) % cards.length;
+      renderRecommend(currentRec);
+    });
+
+    document.getElementById('recNextBtn').addEventListener('click', () => {
+      currentRec = (currentRec + 1) % cards.length;
+      renderRecommend(currentRec);
+    });
+
+    const tabs = document.querySelectorAll('.event-tab');
+    const panels = document.querySelectorAll('.event-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

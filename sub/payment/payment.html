@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문 및 결제 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../cart/cart.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span>입덕볶이 메뉴</span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../../index.html"><span>🏠 홈으로</span><span>›</span></a>
+          <a href="../lists/lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
+          <a href="../detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="../cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="../payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30
+      </div>
+    </aside>
+
+    <section class="pay-box">
+      <h2>배달 주소</h2>
+      <div class="address-card">
+        <strong>인천광역시 연수구 송도동 123-45</strong>
+        <p>입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요</p>
+      </div>
+    </section>
+
+    <section class="pay-box">
+      <h2>주문 상품 정보</h2>
+      <div class="order-product-card">
+        <img id="payThumb" src="../../Imgs/logo-mascot.png" alt="주문 메뉴">
+        <div>
+          <strong id="payMenuTitle">눈꽃치즈 매운 떡볶이</strong>
+          <p id="payMenuOpt">맵기: 보통맛</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pay-box">
+      <h2>할인 쿠폰</h2>
+      <select id="couponSelect" class="coupon-select">
+        <option value="3000" selected>🎉 첫 주문 3,000원 할인 쿠폰 (-3,000원)</option>
+        <option value="2000">🎟️ 떡볶이 단골 2,000원 할인 (-2,000원)</option>
+        <option value="0">쿠폰 사용 안 함</option>
+      </select>
+    </section>
+
+    <section class="pay-box">
+  <h2>결제 수단</h2>
+  <div class="pay-method-grid" id="payMethodGrid">
+    <label class="pay-method active">
+      <input type="radio" name="payMethod" value="토스페이" checked>
+      <span>토스페이</span>
+    </label>
+    <label class="pay-method">
+      <input type="radio" name="payMethod" value="카카오페이">
+      <span>카카오페이</span>
+    </label>
+    <label class="pay-method">
+      <input type="radio" name="payMethod" value="신용/체크카드">
+      <span>신용/체크카드</span>
+    </label>
+    <label class="pay-method">
+      <input type="radio" name="payMethod" value="네이버페이">
+      <span>네이버페이</span>
+    </label>
+  </div>
+</section>
+
+    <section class="pay-box no-border">
+      <div class="final-price-card">
+        <div class="f-row"><span>주문금액</span><span id="paySubTotal">10,500원</span></div>
+        <div class="f-row"><span>배달팁</span><span>3,000원</span></div>
+        <div class="f-row discount"><span>쿠폰 할인</span><span id="payDiscount">-3,000원</span></div>
+        <div class="f-line"></div>
+        <div class="f-row total"><span>최종 결제금액</span><strong id="payFinalTotal">10,500원</strong></div>
+      </div>
+
+      <button type="button" class="btn-action-red" id="submitPayBtn">10,500원 결제하기</button>
+    </section>
+  </div>
+
+  <script src="../../app.js"></script>
+  <script>
+    const cart = getCart();
+    const firstItem = cart[0] || {
+      name: '눈꽃치즈 매운 떡볶이',
+      img: 'images/tteokbokki-main.png',
+      spice: '보통맛',
+      toppings: [],
+      unitPrice: 10500,
+      qty: 1
+    };
+
+    const itemTotal = cart.length > 0
+      ? cart.reduce((s, it) => s + it.unitPrice * it.qty, 0)
+      : firstItem.unitPrice;
+
+    const totalQty = cart.length > 0
+      ? cart.reduce((s, it) => s + it.qty, 0)
+      : 1;
+
+    const titleText = totalQty > 1
+      ? `${firstItem.name} 외 ${totalQty - 1}건`
+      : firstItem.name;
+
+    document.getElementById('payThumb').src = resolveAsset(firstItem.img);
+    document.getElementById('payMenuTitle').textContent = titleText;
+    document.getElementById('payMenuOpt').textContent =
+      `맵기: ${firstItem.spice}` + (firstItem.toppings?.length ? ` · ${firstItem.toppings.join(', ')}` : '');
+
+    const couponSelect = document.getElementById('couponSelect');
+    const submitPayBtn = document.getElementById('submitPayBtn');
+
+    function updatePaySummary() {
+      const discount = Number(couponSelect.value);
+      const finalAmount = Math.max(0, itemTotal + 3000 - discount);
+      document.getElementById('paySubTotal').textContent = formatPrice(itemTotal);
+      document.getElementById('payDiscount').textContent = `-${formatPrice(discount)}`;
+      document.getElementById('payFinalTotal').textContent = formatPrice(finalAmount);
+      submitPayBtn.textContent = `${formatPrice(finalAmount)} 결제하기`;
+      return finalAmount;
+    }
+
+    couponSelect.addEventListener('change', updatePaySummary);
+    updatePaySummary();
+
+    document.querySelectorAll('.pay-method').forEach((label) => {
+      label.addEventListener('click', () => {
+        document.querySelectorAll('.pay-method').forEach((l) => l.classList.remove('active'));
+        label.classList.add('active');
+      });
+    });
+
+    submitPayBtn.addEventListener('click', () => {
+      const finalAmount = updatePaySummary();
+      const method = document.querySelector('input[name="payMethod"]:checked')?.value || '토스페이';
+      localStorage.setItem('ipdeok_last_order', JSON.stringify({
+        menuTitle: titleText,
+        totalPrice: finalAmount,
+        method: method
+      }));
+      <a href="../payment_finish/payment_finish.html" class="btn-action-red" id="submitPayBtn">10,500원 결제하기</a>
+    });
+  </script>
+</body>
+</html>
