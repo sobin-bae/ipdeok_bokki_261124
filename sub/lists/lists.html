@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>메뉴 리스트 - 입덕볶이</title>
+  <title>입덕볶이 - 전체메뉴</title>
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="css/lists.css">
 </head>
@@ -33,18 +33,20 @@
         <div class="drawer-top">
           <div class="drawer-brand">
             <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
-            <span>입덕볶이 메뉴</span>
           </div>
           <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
         </div>
         <nav class="drawer-nav">
-          <a href="../../index.html"><span>🏠 홈으로</span><span>›</span></a>
-          <a href="lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
-          <a href="../detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
-          <a href="../cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
-          <a href="../payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
-          <a href="../payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
-        </nav>
+                  <!-- <a href="index.html"><span>🏠 홈으로</span><span>›</span></a> -->
+          <a href="sub/lists/lists.html"><span>메뉴</span><span></span></a>
+          <!-- <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a> -->
+          <a href="#">소개</a>
+          <a href="#">커뮤니티</a>
+          <a href="#">로그인</a>
+          </nav>
       </div>
       <div class="drawer-footer">
         <strong>입덕볶이 고객센터</strong>
@@ -52,13 +54,41 @@
       </div>
     </aside>
 
+    <!-- 검색 + 카테고리 + 2열 메뉴 카드 섹션 -->
     <section class="list-section">
       <h1 class="page-title">전체 메뉴</h1>
-      <p class="page-sub">원하시는 메뉴를 눌러 맵기와 토핑을 선택해 주세요.</p>
+      <p class="page-sub">원하시는 메뉴를 검색하거나 카테고리를 눌러 선택해 주세요.</p>
 
-      <div class="list-grid">
-        <a href="../detail/detail.html?menu=original" class="list-card">
-          <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=400&q=80" alt="입덕 오리지널 떡볶이">
+      <!-- 실시간 검색바 -->
+      <div class="menu-search-box">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          id="menuSearchInput"
+          placeholder="찾으시는 메뉴를 검색해 보세요 (예: 로제, 튀김, 콜라)"
+          autocomplete="off"
+        >
+        <button type="button" id="clearSearchBtn" class="clear-search-btn" aria-label="검색어 지우기" hidden>&times;</button>
+      </div>
+
+      <!-- 카테고리 필터 탭 -->
+      <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="메뉴 카테고리">
+        <button type="button" class="cat-tab active" data-category="all">전체</button>
+        <button type="button" class="cat-tab" data-category="tteokbokki">떡볶이</button>
+        <button type="button" class="cat-tab" data-category="side">사이드</button>
+        <button type="button" class="cat-tab" data-category="drink">음료</button>
+      </div>
+
+      <!-- 필터 결과 개수 -->
+      <div class="menu-count-bar">
+        총 <strong id="menuCount">12</strong>개 메뉴
+      </div>
+
+      <!-- 2열 카드 리스트 (클릭 시 detail.html 이동) -->
+      <div class="list-grid" id="menuGrid">
+        <!-- 떡볶이 (4종) -->
+        <a href="../detail/detail.html?menu=original" class="list-card" data-category="tteokbokki" data-name="입덕 오리지널 떡볶이">
+          <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=600&q=80" alt="입덕 오리지널 떡볶이">
           <div class="list-card-body">
             <span class="badge-tag">#매콤달콤</span>
             <h3>입덕 오리지널 떡볶이</h3>
@@ -66,7 +96,7 @@
           </div>
         </a>
 
-        <a href="../detail/detail.html?menu=cheese" class="list-card">
+        <a href="../detail/detail.html?menu=cheese" class="list-card" data-category="tteokbokki" data-name="눈꽃치즈 매운 떡볶이">
           <img src="../../Imgs/tteokbokki-main.png" alt="눈꽃치즈 매운 떡볶이">
           <div class="list-card-body">
             <span class="badge-tag">#치즈폭탄</span>
@@ -75,7 +105,7 @@
           </div>
         </a>
 
-        <a href="../detail/detail.html?menu=rose" class="list-card">
+        <a href="../detail/detail.html?menu=rose" class="list-card" data-category="tteokbokki" data-name="베이컨 로제 떡볶이">
           <img src="../../Imgs/tteokbokki-rose.png" alt="베이컨 로제 떡볶이">
           <div class="list-card-body">
             <span class="badge-tag">#로제크림</span>
@@ -84,7 +114,7 @@
           </div>
         </a>
 
-        <a href="../detail/detail.html?menu=buldak" class="list-card">
+        <a href="../detail/detail.html?menu=buldak" class="list-card" data-category="tteokbokki" data-name="화끈 불닭맛 폭탄 떡볶이">
           <img src="../../Imgs/tteokbokki-buldak.png" alt="화끈 불닭맛 폭탄 떡볶이">
           <div class="list-card-body">
             <span class="badge-tag">#스트레스해소</span>
@@ -92,6 +122,85 @@
             <strong>9,500원</strong>
           </div>
         </a>
+
+        <!-- 사이드 (4종) -->
+        <a href="../detail/detail.html?menu=fried-combo" class="list-card" data-category="side" data-name="바삭 모둠 튀김">
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80" alt="바삭 모둠 튀김">
+          <div class="list-card-body">
+            <span class="badge-tag">#바삭사이드</span>
+            <h3>바삭 모둠 튀김</h3>
+            <strong>4,500원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=cheese-ball" class="list-card" data-category="side" data-name="쫀득 치즈볼">
+          <img src="https://images.unsplash.com/photo-1548340748-6d2b7d7da280?auto=format&fit=crop&w=600&q=80" alt="쫀득 치즈볼">
+          <div class="list-card-body">
+            <span class="badge-tag">#치즈쭉쭉</span>
+            <h3>쫀득 치즈볼</h3>
+            <strong>4,000원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=gimmari" class="list-card" data-category="side" data-name="바삭 김말이 튀김">
+          <img src="../../Imgs/kimmalee.png" alt="바삭 김말이 튀김">
+          <div class="list-card-body">
+            <span class="badge-tag">#국물찍먹</span>
+            <h3>바삭 김말이 튀김</h3>
+            <strong>3,500원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=fried-chicken-side" class="list-card" data-category="side" data-name="치킨 가라아게">
+          <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=600&q=80" alt="치킨 가라아게">
+          <div class="list-card-body">
+            <span class="badge-tag">#육즙가득</span>
+            <h3>치킨 가라아게</h3>
+            <strong>5,000원</strong>
+          </div>
+        </a>
+
+        <!-- 음료 (4종) -->
+        <a href="../detail/detail.html?menu=cola" class="list-card" data-category="drink" data-name="콜라">
+          <img src="../../Imgs/cola-can.png" alt="콜라">
+          <div class="list-card-body">
+            <span class="badge-tag">#시원한탄산</span>
+            <h3>콜라</h3>
+            <strong>2,000원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=cider" class="list-card" data-category="drink" data-name="사이다">
+          <img src="../../Imgs/cider-can.png" alt="사이다">
+          <div class="list-card-body">
+            <span class="badge-tag">#청량사이다</span>
+            <h3>사이다</h3>
+            <strong>2,000원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=fanta" class="list-card" data-category="drink" data-name="환타 오렌지">
+          <img src="../../Imgs/fanta-orange-can.png" alt="환타">
+          <div class="list-card-body">
+            <span class="badge-tag">#상큼오렌지</span>
+            <h3>환타 오렌지</h3>
+            <strong>2,000원</strong>
+          </div>
+        </a>
+
+        <a href="../detail/detail.html?menu=coolpis" class="list-card" data-category="drink" data-name="쿨피스">
+          <img src="../../Imgs/coolpis-peach-carton.png" alt="쿨피스">
+          <div class="list-card-body">
+            <span class="badge-tag">#매운맛진화</span>
+            <h3>쿨피스</h3>
+            <strong>2,000원</strong>
+          </div>
+        </a>
+      </div>
+
+      <!-- 검색·카테고리 결과 없음 -->
+      <div class="menu-empty" id="menuEmpty" hidden>
+        조건에 맞는 메뉴가 없습니다. 검색어나 카테고리를 바꿔보세요.
       </div>
     </section>
 
@@ -105,7 +214,7 @@
         <button type="button" class="hash-btn" data-menu="cheese">#치즈폭탄</button>
         <button type="button" class="hash-btn" data-menu="rose">#로제크림</button>
         <button type="button" class="hash-btn" data-menu="buldak">#스트레스해소</button>
-        <button type="button" class="hash-btn" data-menu="side">#바삭사이드</button>
+        <button type="button" class="hash-btn" data-menu="fried-combo">#바삭사이드</button>
       </div>
 
       <div class="tag-result-card" id="tagResultCard">
@@ -127,47 +236,118 @@
 
   <script src="../../app.js"></script>
   <script>
-    const hashBtns = document.querySelectorAll('.hash-btn');
-    const tagImg = document.getElementById('tagMenuImg');
-    const tagName = document.getElementById('tagMenuName');
-    const tagPrice = document.getElementById('tagMenuPrice');
-    const tagDesc = document.getElementById('tagMenuDesc');
-    const tagDetailLink = document.getElementById('tagDetailLink');
-    const tagQuickOrderBtn = document.getElementById('tagQuickOrderBtn');
+    (function () {
+      const searchInput = document.getElementById('menuSearchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      const categoryTabs = document.querySelectorAll('.cat-tab');
+      const menuCards = Array.from(document.querySelectorAll('#menuGrid .list-card'));
+      const menuCountEl = document.getElementById('menuCount');
+      const menuEmptyEl = document.getElementById('menuEmpty');
 
-    let selectedTagMenuKey = 'original';
+      let activeCategory = 'all';
 
-    hashBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        hashBtns.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
+      function applyMenuFilter() {
+        const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        if (clearSearchBtn) {
+          clearSearchBtn.hidden = query.length === 0;
+        }
 
-        selectedTagMenuKey = btn.dataset.menu;
-        const item = MENU_DATA[selectedTagMenuKey];
-        if (!item) return;
+        let shownCount = 0;
 
-        tagImg.src = resolveAsset(item.img);
-        tagName.textContent = item.name;
-        tagPrice.textContent = formatPrice(item.price);
-        tagDesc.textContent = item.desc;
-        tagDetailLink.href = `../detail/detail.html?menu=${item.id}`;
+        menuCards.forEach((card) => {
+          const cardCat = (card.getAttribute('data-category') || card.dataset.category || '').trim();
+          const cardName = (card.getAttribute('data-name') || card.dataset.name || card.textContent || '').toLowerCase();
+
+          const matchCategory = activeCategory === 'all' || cardCat === activeCategory;
+          const matchKeyword = query === '' || cardName.includes(query);
+          const isVisible = matchCategory && matchKeyword;
+
+          card.hidden = !isVisible;
+          card.style.display = isVisible ? '' : 'none';
+
+          if (isVisible) {
+            shownCount += 1;
+          }
+        });
+
+        if (menuCountEl) menuCountEl.textContent = shownCount;
+        if (menuEmptyEl) {
+          menuEmptyEl.hidden = shownCount > 0;
+          menuEmptyEl.style.display = shownCount > 0 ? 'none' : 'block';
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyMenuFilter);
+      }
+
+      if (clearSearchBtn && searchInput) {
+        clearSearchBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          applyMenuFilter();
+          searchInput.focus();
+        });
+      }
+
+      categoryTabs.forEach((tab) => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          categoryTabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeCategory = (tab.getAttribute('data-category') || tab.dataset.category || 'all').trim();
+          applyMenuFilter();
+        });
       });
-    });
 
-    tagQuickOrderBtn.addEventListener('click', () => {
-      const item = MENU_DATA[selectedTagMenuKey];
-      saveCart([{
-        id: item.id,
-        name: item.name,
-        img: item.img,
-        basePrice: item.price,
-        spice: '보통맛',
-        toppings: [],
-        unitPrice: item.price,
-        qty: 1
-      }]);
-      location.href = '../payment/payment.html';
-    });
+      applyMenuFilter();
+
+      const hashBtns = document.querySelectorAll('.hash-btn');
+      const tagImg = document.getElementById('tagMenuImg');
+      const tagName = document.getElementById('tagMenuName');
+      const tagPrice = document.getElementById('tagMenuPrice');
+      const tagDesc = document.getElementById('tagMenuDesc');
+      const tagDetailLink = document.getElementById('tagDetailLink');
+      const tagQuickOrderBtn = document.getElementById('tagQuickOrderBtn');
+
+      let selectedTagMenuKey = 'original';
+
+      hashBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          hashBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          selectedTagMenuKey = btn.dataset.menu;
+          if (typeof MENU_DATA === 'undefined') return;
+          const item = MENU_DATA[selectedTagMenuKey];
+          if (!item) return;
+
+          if (tagImg && typeof resolveAsset === 'function') tagImg.src = resolveAsset(item.img);
+          if (tagName) tagName.textContent = item.name;
+          if (tagPrice && typeof formatPrice === 'function') tagPrice.textContent = formatPrice(item.price);
+          if (tagDesc) tagDesc.textContent = item.desc;
+          if (tagDetailLink) tagDetailLink.href = `../detail/detail.html?menu=${item.id}`;
+        });
+      });
+
+      if (tagQuickOrderBtn) {
+        tagQuickOrderBtn.addEventListener('click', () => {
+          if (typeof MENU_DATA === 'undefined' || typeof saveCart !== 'function') return;
+          const item = MENU_DATA[selectedTagMenuKey];
+          if (!item) return;
+          saveCart([{
+            id: item.id,
+            name: item.name,
+            img: item.img,
+            basePrice: item.price,
+            spice: '보통맛',
+            toppings: [],
+            unitPrice: item.price,
+            qty: 1
+          }]);
+          location.href = '../payment/payment.html';
+        });
+      }
+    })();
   </script>
 </body>
 </html>

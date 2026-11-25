@@ -13,16 +13,132 @@
 .page-sub {
   font-size: 13px;
   color: var(--text-sub);
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
-.list-grid {
+/* 실시간 검색바 (이중 박스 제거 및 단일 통일형) */
+.menu-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  border-radius: 99px;
+  background-color: #F5F5F5;
+  border: 1.5px solid transparent;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.menu-search-box:focus-within {
+  background-color: var(--white);
+  border-color: var(--brand-red);
+}
+
+.menu-search-box .search-icon {
+  position: static;
+  margin-right: 10px;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--text-sub);
+  flex-shrink: 0;
+}
+
+.menu-search-box input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-main);
+  outline: none;
+  box-shadow: none;
+}
+
+.menu-search-box input::placeholder {
+  color: #9E9E9E;
+}
+
+.clear-search-btn {
+  position: static;
+  margin-left: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #E0E0E0;
+  color: #555555;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.clear-search-btn[hidden] {
+  display: none;
+}
+
+/* 카테고리 필터 탭 */
+.category-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.cat-tab {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: var(--white);
+  color: var(--text-sub);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+}
+
+.cat-tab.active {
+  background-color: var(--brand-red);
+  color: var(--white);
+  border-color: var(--brand-red);
+}
+
+/* 메뉴 개수 바 */
+.menu-count-bar {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+}
+
+.menu-count-bar strong {
+  color: var(--brand-red);
+  font-weight: 800;
+}
+
+/* 2열 메뉴 카드 그리드 */
+.list-grid,
+.list-grid[data-category="drink"],
+.drink-list,
+.drink-grid,
+.menu-list-drink {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
 .list-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
   border: 1px solid var(--border-light);
   border-radius: 14px;
   overflow: hidden;
@@ -31,16 +147,22 @@
 }
 
 .list-card img {
+  display: block;
   width: 100%;
   height: 118px;
   object-fit: cover;
+  background-color: #FFFFFF;
 }
 
 .list-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 11px 12px;
 }
 
 .badge-tag {
+  align-self: flex-start;
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
@@ -55,14 +177,29 @@
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 4px;
+  color: var(--text-main);
 }
 
 .list-card-body strong {
+  margin-top: auto;
   font-size: 14px;
   font-weight: 800;
   color: var(--brand-red);
 }
 
+/* 검색·카테고리 결과 없음 */
+.menu-empty {
+  margin-top: 16px;
+  padding: 28px 16px;
+  border-radius: 14px;
+  background-color: var(--bg-cream);
+  border: 1px dashed #FFD4C7;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+/* 해시태그 추천 영역 */
 .hashtag-section {
   padding: 22px 20px 10px;
   background-color: var(--bg-cream);
@@ -113,6 +250,7 @@
 }
 
 .tag-result-card img {
+  display: block;
   width: 100%;
   height: 170px;
   object-fit: cover;
@@ -169,6 +307,7 @@
   flex: 1.2;
 }
 
+/* 튀김 카드 텍스트 스타일 */
 .fried-card-text {
   padding: 12px 14px;
   display: flex;

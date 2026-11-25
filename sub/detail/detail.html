@@ -6,6 +6,30 @@
   <title>메뉴 상세 & 옵션 선택 - 입덕볶이</title>
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="css/detail.css">
+  <style>
+    .combo-tip-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background-color: #FFF5F5;
+      border: 1px solid #FFD6D6;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #333333;
+    }
+    .combo-tip-badge {
+      flex-shrink: 0;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background-color: #E52528;
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+    }
+  </style>
 </head>
 <body>
   <div class="app-wrap">
@@ -33,18 +57,20 @@
         <div class="drawer-top">
           <div class="drawer-brand">
             <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
-            <span>입덕볶이 메뉴</span>
           </div>
           <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
         </div>
         <nav class="drawer-nav">
-          <a href="../../index.html"><span>🏠 홈으로</span><span>›</span></a>
-          <a href="../lists/lists.html"><span>🍲 전체 메뉴 리스트</span><span>›</span></a>
-          <a href="detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
-          <a href="../cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
-          <a href="../payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
-          <a href="../payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a>
-        </nav>
+                 <!-- <a href="index.html"><span>🏠 홈으로</span><span>›</span></a> -->
+          <a href="sub/lists/lists.html"><span>메뉴</span><span></span></a>
+          <!-- <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
+          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
+          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
+          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a> -->
+          <a href="#">소개</a>
+          <a href="#">커뮤니티</a>
+          <a href="#">로그인</a>
+          </nav>
       </div>
       <div class="drawer-footer">
         <strong>입덕볶이 고객센터</strong>
@@ -53,7 +79,7 @@
     </aside>
 
     <div class="detail-hero">
-      <img id="detailImg" src="../../images/tteokbokki-main.png" alt="떡볶이 메뉴 사진">
+      <img id="detailImg" src="../../Imgs/tteokbokki-main.png" alt="떡볶이 메뉴 사진">
     </div>
 
     <section class="detail-info">
@@ -64,69 +90,26 @@
       <p class="detail-desc" id="detailDesc">
         화끈하게 매운 특제 양념 위로 100% 자연산 모짜렐라 눈꽃치즈를 아낌없이 올렸습니다. 매콤함과 고소한 치즈의 완벽한 단짠·맵느 조합을 경험해 보세요.
       </p>
-    </section>
-
-    <section class="option-group">
-      <div class="option-header">
-        <h2>맛 선택</h2>
-        <span class="required-pill">필수</span>
+      <div class="combo-tip-box" id="comboTipBox" hidden>
+        <span class="combo-tip-badge">꿀조합 TIP</span>
+        <span id="comboTipText"></span>
       </div>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="radio" name="spice" value="순한맛">
-          <span>🌶️ 순한맛</span>
-        </div>
-        <span class="option-price">+0원</span>
-      </label>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="radio" name="spice" value="보통맛" checked>
-          <span>🌶️🌶️ 보통맛</span>
-        </div>
-        <span class="option-price">+0원</span>
-      </label>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="radio" name="spice" value="매운맛">
-          <span>🌶️🌶️🌶️ 매운맛</span>
-        </div>
-        <span class="option-price">+0원</span>
-      </label>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="radio" name="spice" value="아주 매운맛">
-          <span>🔥 아주 매운맛</span>
-        </div>
-        <span class="option-price">+0원</span>
-      </label>
     </section>
 
     <section class="option-group">
       <div class="option-header">
-        <h2>토핑 추가</h2>
+        <h2 id="primaryOptionTitle">맛 선택</h2>
+        <span class="required-pill" id="primaryOptionPill">필수</span>
+      </div>
+      <div id="primaryOptionList"></div>
+    </section>
+
+    <section class="option-group">
+      <div class="option-header">
+        <h2 id="extraOptionTitle">토핑 추가</h2>
         <span class="optional-pill">선택</span>
       </div>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="checkbox" class="topping-chk" value="치즈 추가" data-price="1500">
-          <span>🧀 치즈 추가</span>
-        </div>
-        <span class="option-price">+1,500원</span>
-      </label>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="checkbox" class="topping-chk" value="분모자 추가" data-price="2000">
-          <span>🥢 분모자 추가</span>
-        </div>
-        <span class="option-price">+2,000원</span>
-      </label>
-      <label class="option-item">
-        <div class="option-left">
-          <input type="checkbox" class="topping-chk" value="주먹밥 추가" data-price="1500">
-          <span>🍙 주먹밥 추가</span>
-        </div>
-        <span class="option-price">+1,500원</span>
-      </label>
+      <div id="extraOptionList"></div>
     </section>
 
     <div class="detail-bottom-bar">
@@ -142,10 +125,133 @@
     const menuKey = params.get('menu') || 'cheese';
     const currentMenu = MENU_DATA[menuKey] || MENU_DATA.cheese;
 
-    document.getElementById('detailImg').src = resolveAsset(currentMenu.img);
+    const isSide = currentMenu.category === 'side';
+    const isDrink = currentMenu.category === 'drink';
+
+    const detailImgEl = document.getElementById('detailImg');
+    detailImgEl.src = resolveAsset(currentMenu.img);
+    detailImgEl.alt = currentMenu.name;
+
     document.getElementById('detailName').textContent = currentMenu.name;
     document.getElementById('detailPrice').textContent = formatPrice(currentMenu.price);
     document.getElementById('detailDesc').textContent = currentMenu.desc;
+
+    const comboTipBox = document.getElementById('comboTipBox');
+    const comboTipText = document.getElementById('comboTipText');
+    if ((isSide || isDrink) && currentMenu.comboTip) {
+      comboTipText.textContent = currentMenu.comboTip;
+      comboTipBox.hidden = false;
+    }
+
+    const primaryTitleEl = document.getElementById('primaryOptionTitle');
+    const primaryPillEl = document.getElementById('primaryOptionPill');
+    const primaryListEl = document.getElementById('primaryOptionList');
+    const extraTitleEl = document.getElementById('extraOptionTitle');
+    const extraListEl = document.getElementById('extraOptionList');
+
+    // 사이드 메뉴 찍먹 소스 기본 목록 (개별 가격 포함)
+    const defaultSideSauces = [
+      { name: '기본 간장소스', price: 0 },
+      { name: '매콤달콤 양념소스', price: 500 },
+      { name: '허니머스타드 소스', price: 500 },
+      { name: '체다 치즈 디핑소스', price: 1000 }
+    ];
+
+    const rawSideSauces = Array.isArray(currentMenu.sauces)
+      ? currentMenu.sauces.map((s) =>
+          typeof s === 'string' ? { name: s, price: 0 } : { name: s.name, price: Number(s.price || 0) }
+        )
+      : defaultSideSauces;
+
+    const primaryOptions = isDrink
+      ? (currentMenu.drinkOptions || ['시원하게 (기본)', '얼음 가득']).map((label, idx) => ({
+          value: label,
+          label: idx === 0 ? `🧊 ${label}` : `❄️ ${label}`,
+          price: 0,
+          checked: idx === 0
+        }))
+      : isSide
+        ? rawSideSauces.map((s) => ({
+            value: s.name,
+            label: `🥄 ${s.name}`,
+            price: s.price,
+            checked: false
+          }))
+        : [
+            { value: '순한맛', label: '🌶️ 순한맛', price: 0, checked: false },
+            { value: '보통맛', label: '🌶️🌶️ 보통맛', price: 0, checked: true },
+            { value: '매운맛', label: '🌶️🌶️🌶️ 매운맛', price: 0, checked: false },
+            { value: '아주 매운맛', label: '🔥 아주 매운맛', price: 0, checked: false }
+          ];
+
+    const extraOptions = isDrink
+      ? (currentMenu.drinkExtras || [
+          { name: '얼음컵 추가', price: 500 },
+          { name: '빨대 포함', price: 0 }
+        ]).map((opt) => ({
+          value: opt.name,
+          label: opt.name.includes('얼음') ? `🧊 ${opt.name}` : `🥤 ${opt.name}`,
+          price: Number(opt.price || 0)
+        }))
+      : isSide
+        ? (currentMenu.extraOptions || [
+            { name: '눈꽃 모짜렐라 치즈 추가', price: 1500 },
+            { name: '단무지 추가', price: 500 }
+          ]).map((opt) => ({
+            value: opt.name,
+            label: opt.name.includes('치즈') ? `🧀 ${opt.name}` : `🥢 ${opt.name}`,
+            price: Number(opt.price || 0)
+          }))
+        : [
+            { value: '치즈 추가', label: '🧀 치즈 추가', price: 1500 },
+            { value: '분모자 추가', label: '🥢 분모자 추가', price: 2000 },
+            { value: '주먹밥 추가', label: '🍙 주먹밥 추가', price: 1500 }
+          ];
+
+    primaryTitleEl.textContent = isDrink ? '온도 / 얼음 선택' : (isSide ? '찍먹 소스 선택' : '맛 선택');
+    extraTitleEl.textContent = isDrink ? '곁들임 옵션' : (isSide ? '사이드 추가 옵션' : '토핑 추가');
+
+    // 사이드는 찍먹 소스를 '필수'가 아닌 '선택' 배지로 전환
+    if (isSide) {
+      primaryPillEl.textContent = '선택';
+      primaryPillEl.className = 'optional-pill';
+    } else {
+      primaryPillEl.textContent = '필수';
+      primaryPillEl.className = 'required-pill';
+    }
+
+    // 사이드는 찍먹 소스를 체크박스(선택)로, 떡볶이·음료는 라디오(필수)로 렌더링
+    if (isSide) {
+      primaryListEl.innerHTML = primaryOptions.map((opt) => `
+        <label class="option-item">
+          <div class="option-left">
+            <input type="checkbox" class="sauce-chk topping-chk" value="${opt.value}" data-price="${opt.price}">
+            <span>${opt.label}</span>
+          </div>
+          <span class="option-price">+${formatPrice(opt.price)}</span>
+        </label>
+      `).join('');
+    } else {
+      primaryListEl.innerHTML = primaryOptions.map((opt) => `
+        <label class="option-item">
+          <div class="option-left">
+            <input type="radio" name="spice" value="${opt.value}" ${opt.checked ? 'checked' : ''}>
+            <span>${opt.label}</span>
+          </div>
+          <span class="option-price">+0원</span>
+        </label>
+      `).join('');
+    }
+
+    extraListEl.innerHTML = extraOptions.map((opt) => `
+      <label class="option-item">
+        <div class="option-left">
+          <input type="checkbox" class="topping-chk" value="${opt.value}" data-price="${opt.price}">
+          <span>${opt.label}</span>
+        </div>
+        <span class="option-price">+${formatPrice(opt.price)}</span>
+      </label>
+    `).join('');
 
     const toppingChks = document.querySelectorAll('.topping-chk');
     const addToCartBtn = document.getElementById('addToCartBtn');
@@ -164,14 +270,20 @@
     calcTotal();
 
     addToCartBtn.addEventListener('click', () => {
-      const selectedSpice = document.querySelector('input[name="spice"]:checked')?.value || '보통맛';
+      const selectedSpice = isSide
+        ? '기본'
+        : (document.querySelector('input[name="spice"]:checked')?.value || primaryOptions[0].value);
+
       const selectedToppings = [];
       let extra = 0;
 
       toppingChks.forEach((chk) => {
         if (chk.checked) {
-          selectedToppings.push(`${chk.value}(+${formatPrice(chk.dataset.price)})`);
-          extra += Number(chk.dataset.price);
+          const priceNum = Number(chk.dataset.price);
+          selectedToppings.push(
+            priceNum > 0 ? `${chk.value}(+${formatPrice(priceNum)})` : `${chk.value}`
+          );
+          extra += priceNum;
         }
       });
 
