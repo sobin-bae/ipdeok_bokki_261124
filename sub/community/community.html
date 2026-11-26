@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커뮤니티 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .comm-top-banner {
+      margin: 16px 20px 6px;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(125deg, #E53935 0%, #FF7043 100%);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-md);
+    }
+
+    .comm-pill {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.22);
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .comm-top-banner h1 {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .comm-top-banner p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.45;
+    }
+
+    .comm-search-wrap {
+      padding: 12px 20px 2px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comm-search-input {
+      width: 100%;
+      border: 1px solid #E5E5E5;
+      border-radius: 12px;
+      background-color: #FFFFFF;
+      padding: 10px 36px 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text-main);
+    }
+
+    .comm-search-input:focus {
+      outline: none;
+      border-color: var(--brand-red);
+    }
+
+    .comm-search-clear {
+      position: absolute;
+      right: 28px;
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .comm-toolbar {
+      padding: 10px 20px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .comm-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .comm-tab {
+      padding: 6px 11px;
+      border-radius: 999px;
+      background-color: var(--bg-soft);
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .comm-tab.active {
+      background-color: var(--brand-red);
+      color: #FFFFFF;
+    }
+
+    .btn-write-toggle {
+      padding: 7px 12px;
+      border-radius: 10px;
+      background-color: var(--brand-gold);
+      color: #1A1A1A;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .write-box {
+      margin: 10px 20px 6px;
+      padding: 16px;
+      border-radius: 16px;
+      background-color: var(--bg-cream);
+      border: 1px solid #FFE2DC;
+    }
+
+    .write-box h2 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .write-field {
+      margin-bottom: 10px;
+    }
+
+    .write-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .write-select,
+    .write-input,
+    .write-textarea {
+      width: 100%;
+      border: 1px solid #E5E5E5;
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      padding: 9px 11px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text-main);
+    }
+
+    .write-textarea {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    .write-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .btn-write-cancel {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background-color: #EFEFEF;
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .btn-write-submit {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background-color: var(--brand-red);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .post-list {
+      padding: 10px 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .post-card {
+      padding: 15px 16px;
+      border-radius: 16px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .post-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .post-cat-badge {
+      padding: 2px 8px;
+      border-radius: 6px;
+      background-color: #FFF0F0;
+      color: var(--brand-red);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .post-date {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .post-title-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.38;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .post-arrow {
+      font-size: 13px;
+      color: var(--text-sub);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .post-content {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      background-color: var(--bg-soft);
+      white-space: pre-line;
+    }
+
+    .post-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .post-author {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .post-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: var(--bg-soft);
+      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .like-btn.liked {
+      background-color: #FFE8E8;
+      color: var(--brand-red);
+    }
+
+    .post-tool-btn {
+      padding: 4px 8px;
+      border-radius: 8px;
+      background-color: var(--bg-soft);
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .post-tool-btn.delete:hover {
+      background-color: #FFE8E8;
+      color: var(--brand-red);
+    }
+
+    .empty-post-box {
+      padding: 28px 16px;
+      border-radius: 16px;
+      background-color: var(--bg-soft);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrap">
+    <!-- 헤더 -->
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../../index.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="../login/login.html" class="user-icon-btn" id="headerUserBtn" aria-label="로그인">
+          <i data-lucide="user"></i>
+        </a>
+        <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 슬라이드 메뉴 오버레이 & 드로어 -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="../about/about.html"><span>소개</span><span>›</span></a>
+          <a href="community.html"><span>커뮤니티</span><span>›</span></a>
+          <a href="../login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="../mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30 (연중무휴)<br>
+        주문문의 1588-8253
+      </div>
+    </aside>
+
+    <!-- 상단 커뮤니티 배너 -->
+    <section class="comm-top-banner">
+      <span class="comm-pill">IPDEOK COMMUNITY</span>
+      <h1>입덕볶이 맛·맵기·꿀조합 광장</h1>
+      <p>제목을 눌러 본문을 확인하고, 궁금한 단어로 후기를 검색해 보세요.</p>
+    </section>
+
+    <!-- 검색창 -->
+    <div class="comm-search-wrap">
+      <input
+        type="search"
+        id="commSearchInput"
+        class="comm-search-input"
+        placeholder="궁금한 맵기·메뉴·단어 검색 (예: 불닭, 로제, 김말이)"
+        aria-label="커뮤니티 게시글 검색"
+      >
+      <button type="button" class="comm-search-clear" id="commSearchClear" aria-label="검색어 지우기" hidden>&times;</button>
+    </div>
+
+    <!-- 카테고리 탭 & 글쓰기 버튼 -->
+    <div class="comm-toolbar">
+      <div class="comm-tabs" id="commTabs">
+        <button type="button" class="comm-tab active" data-cat="all">전체</button>
+        <button type="button" class="comm-tab" data-cat="review">맛·맵기 후기</button>
+        <button type="button" class="comm-tab" data-cat="combo">꿀조합 추천</button>
+        <button type="button" class="comm-tab" data-cat="talk">자유 수다</button>
+      </div>
+      <button type="button" class="btn-write-toggle" id="toggleWriteBtn">✏️ 글쓰기</button>
+    </div>
+
+    <!-- 글쓰기 / 수정 폼 -->
+    <section class="write-box" id="writeBox" hidden>
+      <h2 id="writeBoxTitle">새 글 작성하기</h2>
+      <form id="commPostForm">
+        <input type="hidden" id="editingPostId" value="">
+        <div class="write-field">
+          <label for="postCategory">말머리 선택</label>
+          <select id="postCategory" class="write-select">
+            <option value="review">맛·맵기 후기</option>
+            <option value="combo">꿀조합 추천</option>
+            <option value="talk">자유 수다</option>
+          </select>
+        </div>
+        <div class="write-field">
+          <label for="postTitle">제목</label>
+          <input type="text" id="postTitle" class="write-input" placeholder="예) 눈꽃치즈 보통맛 먹어본 솔직 후기" maxlength="60" required>
+        </div>
+        <div class="write-field">
+          <label for="postContent">내용</label>
+          <textarea id="postContent" class="write-textarea" placeholder="맵기 느낌이나 추천 조합을 편하게 적어주세요." maxlength="500" required></textarea>
+        </div>
+        <div class="write-actions">
+          <button type="button" class="btn-write-cancel" id="cancelWriteBtn">취소</button>
+          <button type="submit" class="btn-write-submit" id="submitWriteBtn">등록하기</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 게시글 목록 -->
+    <section class="post-list" id="postList"></section>
+
+    <!-- 푸터 -->
+    <footer class="site-footer">
+      <strong>(주)입덕볶이 에프앤비</strong>
+      인천광역시 연수구 송도동 123-45 | 대표: 김입덕<br>
+      고객센터: 1588-8253 | Copyright © IPDEOKBOKKI. All rights reserved.
+    </footer>
+  </div>
+
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      const STORAGE_KEY = 'ipdeok_community_posts_v1';
+      const CAT_LABELS = {
+        review: '맛·맵기 후기',
+        combo: '꿀조합 추천',
+        talk: '자유 수다'
+      };
+
+      const DEFAULT_POSTS = [
+        {
+          id: 'p-1',
+          cat: 'review',
+          title: '눈꽃치즈 보통맛 먹어봤는데 신라면 느낌에 치즈가 쭉 늘어나요',
+          content: '보통맛이 딱 기분 좋게 매콤달콤해서 끝까지 물리지 않고 먹기 좋았어요. 치즈 추가하니까 매운맛도 부드럽게 잡아줍니다.',
+          author: '떡볶이러버**',
+          date: '2026.11.24',
+          likes: 14,
+          liked: false
+        },
+        {
+          id: 'p-2',
+          cat: 'combo',
+          title: '화끈 불닭맛 + 바삭 김말이 + 쿨피스 조합 추천해요',
+          content: '김말이 3초 정도 양념에 적셔 먹고 중간중간 쿨피스로 달래주면 스트레스가 확 풀립니다.',
+          author: '매운맛고수**',
+          date: '2026.11.22',
+          likes: 19,
+          liked: false
+        },
+        {
+          id: 'p-3',
+          cat: 'combo',
+          title: '베이컨 로제 떡볶이에 치킨 가라아게 곁들이는 꿀팁',
+          content: '꾸덕한 로제 소스에 가라아게 찍어 먹으면 고소함이 배가 되어서 가족들끼리 시키기 딱 좋았어요.',
+          author: '치즈폭탄조아**',
+          date: '2026.11.19',
+          likes: 11,
+          liked: false
+        },
+        {
+          id: 'p-4',
+          cat: 'talk',
+          title: '오늘 저녁 야식 메뉴 고민 중인데 오리지널 vs 로제 뭐가 좋을까요?',
+          content: '어제 저녁부터 계속 떡볶이가 생각나는데 첫 주문 쿠폰 쓰면서 같이 시킬 사이드도 추천해 주세요.',
+          author: '야식은입덕**',
+          date: '2026.11.17',
+          likes: 8,
+          liked: false
+        }
+      ];
+
+      let activeCat = 'all';
+      let searchKeyword = '';
+      const expandedPostIds = new Set();
+
+      const writeBox = document.getElementById('writeBox');
+      const writeBoxTitle = document.getElementById('writeBoxTitle');
+      const editingPostIdInput = document.getElementById('editingPostId');
+      const postCategorySelect = document.getElementById('postCategory');
+      const postTitleInput = document.getElementById('postTitle');
+      const postContentInput = document.getElementById('postContent');
+      const toggleWriteBtn = document.getElementById('toggleWriteBtn');
+      const cancelWriteBtn = document.getElementById('cancelWriteBtn');
+      const submitWriteBtn = document.getElementById('submitWriteBtn');
+      const postForm = document.getElementById('commPostForm');
+      const searchInput = document.getElementById('commSearchInput');
+      const searchClearBtn = document.getElementById('commSearchClear');
+
+      function loadPosts() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (Array.isArray(saved) && saved.length > 0) return saved;
+        } catch (e) {}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_POSTS));
+        return DEFAULT_POSTS.slice();
+      }
+
+      function savePosts(posts) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+      }
+
+      function getWriterName() {
+        const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+        if (user && (user.nickname || user.id)) {
+          return `${user.nickname || user.id}님`;
+        }
+        return '입덕방문자';
+      }
+
+      function formatToday() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        return `${y}.${m}.${d}`;
+      }
+
+      function openWriteForm(postToEdit) {
+        if (postToEdit) {
+          writeBoxTitle.textContent = '게시글 수정하기';
+          submitWriteBtn.textContent = '수정 완료';
+          editingPostIdInput.value = postToEdit.id;
+          postCategorySelect.value = postToEdit.cat;
+          postTitleInput.value = postToEdit.title;
+          postContentInput.value = postToEdit.content;
+        } else {
+          writeBoxTitle.textContent = '새 글 작성하기';
+          submitWriteBtn.textContent = '등록하기';
+          editingPostIdInput.value = '';
+          postForm.reset();
+        }
+        writeBox.hidden = false;
+        writeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        postTitleInput.focus();
+      }
+
+      function closeWriteForm() {
+        writeBox.hidden = true;
+        editingPostIdInput.value = '';
+        postForm.reset();
+      }
+
+      function renderPosts() {
+        const listEl = document.getElementById('postList');
+        const posts = loadPosts();
+        const kw = searchKeyword.trim().toLowerCase();
+
+        const filtered = posts.filter((p) => {
+          const matchesCat = activeCat === 'all' || p.cat === activeCat;
+          if (!matchesCat) return false;
+          if (!kw) return true;
+          const haystack = `${p.title} ${p.content} ${p.author} ${CAT_LABELS[p.cat] || ''}`.toLowerCase();
+          return haystack.includes(kw);
+        });
+
+        if (filtered.length === 0) {
+          listEl.innerHTML = '<div class="empty-post-box">조건에 맞는 게시글이 없습니다. 다른 검색어나 말머리를 확인해 보세요.</div>';
+          return;
+        }
+
+        listEl.innerHTML = filtered.map((post) => {
+          const isOpen = expandedPostIds.has(post.id);
+          return `
+            <article class="post-card">
+              <div class="post-top">
+                <span class="post-cat-badge">${CAT_LABELS[post.cat] || '자유 수다'}</span>
+                <span class="post-date">${post.date}</span>
+              </div>
+              <button type="button" class="post-title-btn" data-toggle-id="${post.id}" aria-expanded="${isOpen}">
+                <span>${escapeHtml(post.title)}</span>
+                <span class="post-arrow">${isOpen ? '▲' : '▼'}</span>
+              </button>
+              ${isOpen ? `<div class="post-content">${escapeHtml(post.content)}</div>` : ''}
+              <div class="post-footer">
+                <span class="post-author">${escapeHtml(post.author)}</span>
+                <div class="post-actions">
+                  <button type="button" class="like-btn${post.liked ? ' liked' : ''}" data-like-id="${post.id}">
+                    <span>♥</span>
+                    <span>${post.likes}</span>
+                  </button>
+                  <button type="button" class="post-tool-btn edit" data-edit-id="${post.id}">수정</button>
+                  <button type="button" class="post-tool-btn delete" data-delete-id="${post.id}">삭제</button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        listEl.querySelectorAll('.post-title-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.toggleId;
+            if (expandedPostIds.has(id)) {
+              expandedPostIds.delete(id);
+            } else {
+              expandedPostIds.add(id);
+            }
+            renderPosts();
+          });
+        });
+
+        listEl.querySelectorAll('.like-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.likeId;
+            const currentPosts = loadPosts();
+            const target = currentPosts.find((item) => item.id === id);
+            if (!target) return;
+            target.liked = !target.liked;
+            target.likes += target.liked ? 1 : -1;
+            savePosts(currentPosts);
+            renderPosts();
+          });
+        });
+
+        listEl.querySelectorAll('.post-tool-btn.edit').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.editId;
+            const currentPosts = loadPosts();
+            const target = currentPosts.find((item) => item.id === id);
+            if (!target) return;
+            openWriteForm(target);
+          });
+        });
+
+        listEl.querySelectorAll('.post-tool-btn.delete').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.deleteId;
+            if (!confirm('이 게시글을 삭제할까요?')) return;
+            const nextPosts = loadPosts().filter((item) => item.id !== id);
+            expandedPostIds.delete(id);
+            if (editingPostIdInput.value === id) {
+              closeWriteForm();
+            }
+            savePosts(nextPosts);
+            renderPosts();
+          });
+        });
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      searchInput.addEventListener('input', (e) => {
+        searchKeyword = e.target.value;
+        searchClearBtn.hidden = searchKeyword.length === 0;
+        renderPosts();
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchKeyword = '';
+        searchClearBtn.hidden = true;
+        renderPosts();
+        searchInput.focus();
+      });
+
+      document.querySelectorAll('#commTabs .comm-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('#commTabs .comm-tab').forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeCat = tab.dataset.cat;
+          renderPosts();
+        });
+      });
+
+      toggleWriteBtn.addEventListener('click', () => {
+        if (!writeBox.hidden && !editingPostIdInput.value) {
+          closeWriteForm();
+        } else {
+          openWriteForm(null);
+        }
+      });
+
+      cancelWriteBtn.addEventListener('click', closeWriteForm);
+
+      postForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cat = postCategorySelect.value;
+        const title = postTitleInput.value.trim();
+        const content = postContentInput.value.trim();
+        if (!title || !content) return;
+
+        const editId = editingPostIdInput.value;
+        const posts = loadPosts();
+
+        if (editId) {
+          const target = posts.find((item) => item.id === editId);
+          if (target) {
+            target.cat = cat;
+            target.title = title;
+            target.content = content;
+          }
+          expandedPostIds.add(editId);
+        } else {
+          const newId = 'p-' + Date.now();
+          posts.unshift({
+            id: newId,
+            cat,
+            title,
+            content,
+            author: getWriterName(),
+            date: formatToday(),
+            likes: 0,
+            liked: false
+          });
+          expandedPostIds.add(newId);
+        }
+
+        savePosts(posts);
+        closeWriteForm();
+        renderPosts();
+      });
+
+      renderPosts();
+    })();
+  </script>
+</body>
+</html>

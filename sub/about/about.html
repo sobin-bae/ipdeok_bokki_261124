@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>브랜드 소개 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .about-hero {
+      padding: 16px 20px 8px;
+    }
+
+    .about-hero-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 220px;
+      background: linear-gradient(135deg, #261010 0%, #5E1919 100%);
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-hero-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-hero-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, rgba(0, 0, 0, 0.78) 100%);
+      color: #FFFFFF;
+    }
+
+    .about-pill {
+      display: inline-block;
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: var(--brand-gold);
+      color: #1A1A1A;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .about-hero-overlay h1 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .about-hero-overlay p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.45;
+    }
+
+    .about-section {
+      padding: 18px 20px 6px;
+    }
+
+    .about-section-head {
+      margin-bottom: 12px;
+    }
+
+    .about-section-kicker {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--brand-red);
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .about-section-head h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .about-story-box {
+      padding: 18px;
+      border-radius: 18px;
+      background-color: var(--bg-cream);
+      border: 1px solid #FFE2DC;
+    }
+
+    .about-story-box p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
+    }
+
+    .about-story-box p + p {
+      margin-top: 10px;
+    }
+
+    .pillar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pillar-card {
+      padding: 15px 16px;
+      border-radius: 16px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pillar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .pillar-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .pillar-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background-color: #FFF0F0;
+      color: var(--brand-red);
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .pillar-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    .spice-guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .spice-guide-item {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .spice-guide-item strong {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .spice-guide-item span {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    .step-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .step-flow-card {
+      padding: 12px 10px;
+      border-radius: 14px;
+      background-color: var(--bg-soft);
+      text-align: center;
+    }
+
+    .step-num {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--brand-red);
+      margin-bottom: 4px;
+    }
+
+    .step-flow-card strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .step-flow-card span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    .store-info-card {
+      padding: 16px;
+      border-radius: 16px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .store-info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #F2F2F2;
+      font-size: 13px;
+    }
+
+    .store-info-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .store-info-label {
+      font-weight: 700;
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+
+    .store-info-val {
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: right;
+    }
+
+    .about-cta-group {
+      padding: 16px 20px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .about-btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      border-radius: 14px;
+      background-color: var(--brand-red);
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .about-btn-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .about-btn-sub {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      border-radius: 12px;
+      background-color: var(--bg-soft);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrap">
+    <!-- 헤더 -->
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../../index.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="../login/login.html" class="user-icon-btn" id="headerUserBtn" aria-label="로그인">
+          <i data-lucide="user"></i>
+        </a>
+        <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 슬라이드 메뉴 오버레이 & 드로어 -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="about.html"><span>소개</span><span>›</span></a>
+          <a href="../community/community.html"><span>커뮤니티</span><span>›</span></a>
+          <a href="../login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="../mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30 (연중무휴)<br>
+        주문문의 1588-8253
+      </div>
+    </aside>
+
+    <!-- 상단 브랜드 비주얼 -->
+    <section class="about-hero">
+      <div class="about-hero-card">
+        <img src="../../Imgs/tteokbokki-main.png" alt="입덕볶이 대표 떡볶이">
+        <div class="about-hero-overlay">
+          <span class="about-pill">BRAND STORY</span>
+          <h1>한 입 먹는 순간 출구 없는 맛,<br>입덕볶이</h1>
+          <p>첫입의 매콤달콤함과 쫀득한 식감으로 자꾸 생각나는 분식 브랜드</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 브랜드 스토리 -->
+    <section class="about-section">
+      <div class="about-section-head">
+        <span class="about-section-kicker">WHY IPDEOKBOKKI</span>
+        <h2>왜 '입덕볶이'일까요?</h2>
+      </div>
+      <div class="about-story-box">
+        <p>
+          입덕볶이는 단순히 자극적으로 맵기만 한 떡볶이가 아니라, 첫입에 감도는 달콤함과 끝맛에 남는 깔끔한 칼칼함의 균형을 고민하며 시작했습니다.
+        </p>
+        <p>
+          쫄깃하게 씹히는 떡의 식감과 진한 양념의 감칠맛이 어우러져, 평소 분식을 좋아하는 날은 물론 스트레스를 풀고 싶은 날에도 부담 없이 다시 찾게 되는 한 접시를 만듭니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 핵심 맛 & 품질 포인트 -->
+    <section class="about-section">
+      <div class="about-section-head">
+        <span class="about-section-kicker">TASTE &amp; QUALITY</span>
+        <h2>입덕볶이가 지키는 3가지 기준</h2>
+      </div>
+      <div class="pillar-list">
+        <div class="pillar-card">
+          <div class="pillar-top">
+            <strong class="pillar-title">쫄깃한 쌀떡 &amp; 72시간 숙성 양념</strong>
+            <span class="pillar-badge">맛의 기본</span>
+          </div>
+          <p class="pillar-desc">
+            양념이 겉돌지 않고 속까지 깊게 배어드는 식감과 숙성 특제 소스로 오리지널·치즈·로제·불닭 각 메뉴의 개성을 살렸습니다.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-top">
+            <strong class="pillar-title">취향대로 고르는 맵기 단계</strong>
+            <span class="pillar-badge">맵기 선택</span>
+          </div>
+          <p class="pillar-desc">
+            매운맛 초보자부터 매운맛 마니아까지 각자 입맛에 맞게 고를 수 있도록 4단계 맵기 선택 옵션을 제공합니다.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-top">
+            <strong class="pillar-title">떡볶이와 어울리는 사이드 &amp; 음료</strong>
+            <span class="pillar-badge">꿀조합 구성</span>
+          </div>
+          <p class="pillar-desc">
+            바삭 모둠 튀김, 김말이, 치즈볼, 치킨 가라아게와 시원한 음료까지 함께 곁들여 더 풍성한 한 끼를 즐길 수 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 맵기 기준 안내 -->
+    <section class="about-section">
+      <div class="about-section-head">
+        <span class="about-section-kicker">SPICE LEVEL GUIDE</span>
+        <h2>맵기 기준 한눈에 보기</h2>
+      </div>
+      <div class="spice-guide-list">
+        <div class="spice-guide-item">
+          <strong>🌶️ 순한맛</strong>
+          <span>진라면 순한맛~신라면 살짝 아래 정도의 은은한 매콤함</span>
+        </div>
+        <div class="spice-guide-item">
+          <strong>🌶️🌶️ 보통맛</strong>
+          <span>신라면과 비슷한 수준의 기분 좋은 매콤달콤함</span>
+        </div>
+        <div class="spice-guide-item">
+          <strong>🌶️🌶️🌶️ 매운맛</strong>
+          <span>신라면보다 확실히 맵고 불닭볶음면 앞단계 수준의 화끈함</span>
+        </div>
+        <div class="spice-guide-item">
+          <strong>🔥 아주 매운맛</strong>
+          <span>불닭볶음면 이상급의 강렬한 매운맛 (매운맛 마니아 추천)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 주문 이용 흐름 -->
+    <section class="about-section">
+      <div class="about-section-head">
+        <span class="about-section-kicker">HOW TO ORDER</span>
+        <h2>간단 주문 안내</h2>
+      </div>
+      <div class="step-flow-grid">
+        <div class="step-flow-card">
+          <span class="step-num">STEP 01</span>
+          <strong>메뉴 선택</strong>
+          <span>떡볶이·사이드·음료 고르기</span>
+        </div>
+        <div class="step-flow-card">
+          <span class="step-num">STEP 02</span>
+          <strong>옵션 구성</strong>
+          <span>맵기·소스·토핑 추가</span>
+        </div>
+        <div class="step-flow-card">
+          <span class="step-num">STEP 03</span>
+          <strong>주문 완료</strong>
+          <span>장바구니 및 쿠폰 적용</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 매장 및 고객센터 안내 -->
+    <section class="about-section">
+      <div class="about-section-head">
+        <span class="about-section-kicker">STORE &amp; CS</span>
+        <h2>매장 및 고객센터 정보</h2>
+      </div>
+      <div class="store-info-card">
+        <div class="store-info-row">
+          <span class="store-info-label">브랜드</span>
+          <span class="store-info-val">(주)입덕볶이 에프앤비</span>
+        </div>
+        <div class="store-info-row">
+          <span class="store-info-label">대표 주소</span>
+          <span class="store-info-val">인천광역시 연수구 송도동 123-45</span>
+        </div>
+        <div class="store-info-row">
+          <span class="store-info-label">운영시간</span>
+          <span class="store-info-val">매일 11:00 ~ 23:30 (연중무휴)</span>
+        </div>
+        <div class="store-info-row">
+          <span class="store-info-label">주문/고객센터</span>
+          <span class="store-info-val"><a href="tel:1588-8253">1588-8253</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 하단 이동 버튼 -->
+    <div class="about-cta-group">
+      <a href="../lists/lists.html" class="about-btn-primary">메뉴 보러 가기</a>
+      <div class="about-btn-row">
+        <a href="../community/community.html" class="about-btn-sub">커뮤니티 둘러보기</a>
+        <a href="../../index.html#eventSection" class="about-btn-sub">진행중 이벤트 확인</a>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="site-footer">
+      <strong>(주)입덕볶이 에프앤비</strong>
+      인천광역시 연수구 송도동 123-45 | 대표: 김입덕<br>
+      고객센터: 1588-8253 | Copyright © IPDEOKBOKKI. All rights reserved.
+    </footer>
+  </div>
+
+  <script src="../../app.js"></script>
+</body>
+</html>

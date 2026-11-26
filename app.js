@@ -116,7 +116,7 @@ const MENU_DATA = {
     price: 5000,
     tag: '#육즙가득',
     desc: '겉은 바삭하고 속은 촉촉한 육즙이 가득한 한입 크기 순살 치킨 가라아게입니다. 매운 떡볶이와 함께 곁들이기 좋은 든든한 인기 사이드 메뉴입니다.',
-    img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=600&q=80",
+    img: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=600&q=80',
     comboTip: '베이컨 로제 떡볶이의 꾸덕한 크림소스와 찰떡궁합인 바삭 사이드입니다.',
     sauces: [
       { name: '허니머스타드 소스', price: 500 },
@@ -205,27 +205,166 @@ function resolveAsset(relPath) {
   return getAssetPrefix() + relPath;
 }
 
+function getLoginPageHref() {
+  return getAssetPrefix() + 'sub/login/login.html';
+}
+
+function getMyPageHref() {
+  return getAssetPrefix() + 'sub/mypage/mypage.html';
+}
+
+function getCartPageHref() {
+  return getAssetPrefix() + 'sub/cart/cart.html';
+}
+
+function getAboutPageHref() {
+  return getAssetPrefix() + 'sub/about/about.html';
+}
+
+function getCommunityPageHref() {
+  return getAssetPrefix() + 'sub/community/community.html';
+}
+
+function getUserDestinationHref(isLoggedIn) {
+  return isLoggedIn ? getMyPageHref() : getLoginPageHref();
+}
+
+/* ===== 로컬스토리지 회원 인증 및 공통 헤더/드로어 동기화 ===== */
+function getUsers() {
+  try {
+    return JSON.parse(localStorage.getItem('ipdeok_users')) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveUsers(users) {
+  localStorage.setItem('ipdeok_users', JSON.stringify(users));
+}
+
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem('ipdeok_current_user')) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCurrentUser(userObj) {
+  if (userObj) {
+    localStorage.setItem('ipdeok_current_user', JSON.stringify(userObj));
+  } else {
+    localStorage.removeItem('ipdeok_current_user');
+  }
+  syncAuthUI();
+}
+
+function logoutUser() {
+  setCurrentUser(null);
+}
+
+function getDefaultAddress() {
+  try {
+    return JSON.parse(localStorage.getItem('ipdeok_default_address')) || {
+      main: '인천광역시 연수구 송도동 123-45',
+      detail: '입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요'
+    };
+  } catch (e) {
+    return {
+      main: '인천광역시 연수구 송도동 123-45',
+      detail: '입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요'
+    };
+  }
+}
+
+function saveDefaultAddress(addrObj) {
+  localStorage.setItem('ipdeok_default_address', JSON.stringify(addrObj));
+}
+
+function renderLucideIcons() {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+function syncAuthUI() {
+  const user = getCurrentUser();
+  const isLoggedIn = Boolean(user && user.id);
+  const displayName = isLoggedIn ? (user.nickname || user.id) : '';
+  const userTargetHref = getUserDestinationHref(isLoggedIn);
+  const cartHref = getCartPageHref();
+
+  // 모든 페이지 헤더 우측을 [로그인 아이콘] -> [장바구니 아이콘] -> [햄버거 버튼]으로 통일
+  const headerActions = document.querySelector('.site-header .header-actions');
+  if (headerActions) {
+    const isLoginPage = location.pathname.replace(/\\/g, '/').includes('/sub/login/');
+    const isMyPage = location.pathname.replace(/\\/g, '/').includes('/sub/mypage/');
+    const activeUserClass = (isLoggedIn || isLoginPage || isMyPage) ? ' is-logged-in' : '';
+
+    headerActions.innerHTML = `
+      <a href="${userTargetHref}" class="user-icon-btn${activeUserClass}" id="headerUserBtn" aria-label="${isLoggedIn ? '마이페이지' : '로그인'}">
+        <i data-lucide="${isLoggedIn ? 'user-check' : 'user'}"></i>
+      </a>
+      <a href="${cartHref}" class="cart-icon-btn" aria-label="장바구니">
+        <i data-lucide="shopping-cart"></i>
+        <span class="cart-badge">0</span>
+      </a>
+      <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+        <span></span><span></span><span></span>
+      </button>
+    `;
+
+    // 헤더 재렌더링 후 햄버거 버튼 이벤트 재연결
+    const openBtn = document.getElementById('openMenuBtn');
+    const drawer = document.getElementById('slideDrawer');
+    const overlay = document.getElementById('menuOverlay');
+    if (openBtn && drawer && overlay) {
+      openBtn.addEventListener('click', () => {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+      });
+    }
+  }
+
+  // 드로어 상단: 로그인한 사용자에게만 '000님' 표시
+  const drawerUserName = document.getElementById('drawerUserName');
+  if (drawerUserName) {
+    drawerUserName.textContent = isLoggedIn ? `${displayName}님` : '';
+    drawerUserName.hidden = !isLoggedIn;
+  }
+
+  // 드로어 내비게이션: 모든 페이지에서 메뉴, 소개, 커뮤니티, 로그인, 마이페이지로 통일
+  const drawerNav = document.querySelector('#slideDrawer .drawer-nav');
+  if (drawerNav) {
+    const prefix = getAssetPrefix();
+    drawerNav.innerHTML = `
+      <a href="${prefix}sub/lists/lists.html"><span>메뉴</span><span>›</span></a>
+      <a href="${prefix}sub/about/about.html"><span>소개</span><span>›</span></a>
+      <a href="${prefix}sub/community/community.html"><span>커뮤니티</span><span>›</span></a>
+      <a href="${prefix}sub/login/login.html"><span>로그인</span><span>›</span></a>
+      <a href="${prefix}sub/mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
+    `;
+  }
+
+  updateCartBadge();
+  renderLucideIcons();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const openBtn = document.getElementById('openMenuBtn');
   const closeBtn = document.getElementById('closeMenuBtn');
   const overlay = document.getElementById('menuOverlay');
   const drawer = document.getElementById('slideDrawer');
 
-  if (openBtn && drawer && overlay) {
-    const openMenu = () => {
-      drawer.classList.add('active');
-      overlay.classList.add('active');
-    };
+  if (drawer && overlay) {
     const closeMenu = () => {
       drawer.classList.remove('active');
       overlay.classList.remove('active');
     };
-    openBtn.addEventListener('click', openMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     overlay.addEventListener('click', closeMenu);
   }
 
-  updateCartBadge();
+  syncAuthUI();
 });
 
 function getCart() {
@@ -259,104 +398,3 @@ function updateCartBadge() {
 function formatPrice(num) {
   return Number(num).toLocaleString('ko-KR') + '원';
 }
-
-const submitPayBtnEl = document.getElementById('submitPayBtn');
-if (submitPayBtnEl) {
-  submitPayBtnEl.addEventListener('click', (e) => {
-    e.preventDefault();
-    try {
-      const finalAmount = typeof updatePaySummary === 'function' ? updatePaySummary() : 0;
-      const method = document.querySelector('input[name="payMethod"]:checked')?.value || '토스페이';
-      const titleTextEl = document.getElementById('orderMenuTitle');
-      localStorage.setItem('ipdeok_last_order', JSON.stringify({
-        menuTitle: titleTextEl ? titleTextEl.textContent : '입덕볶이 주문',
-        totalPrice: finalAmount,
-        method: method
-      }));
-    } catch (err) {
-      console.error(err);
-    }
-    window.location.href = '../payment_finish/payment_finish.html';
-  });
-}
-
-const payMethods = document.querySelectorAll('#payMethodGrid .pay-method');
-
-function syncPayMethodUI() {
-  payMethods.forEach((label) => {
-    const radio = label.querySelector('input[type="radio"]');
-    const isChecked = Boolean(radio && radio.checked);
-    label.classList.toggle('active', isChecked);
-  });
-}
-
-payMethods.forEach((label) => {
-  const radio = label.querySelector('input[type="radio"]');
-  label.addEventListener('click', () => {
-    if (radio) {
-      radio.checked = true;
-    }
-    syncPayMethodUI();
-  });
-  if (radio) {
-    radio.addEventListener('change', syncPayMethodUI);
-  }
-});
-
-syncPayMethodUI();
-
-// ===== 메뉴페이지 검색 & 카테고리 필터 =====
-document.addEventListener('DOMContentLoaded', () => {
-  const searchInput = document.getElementById('menuSearchInput');
-  const clearBtn = document.getElementById('clearSearchBtn');
-  const categoryTabs = document.querySelectorAll('.cat-tab');
-  const menuCards = document.querySelectorAll('.menu-card');
-  const menuCountEl = document.getElementById('menuCount');
-  const menuEmptyEl = document.getElementById('menuEmpty');
-
-  if (!searchInput || !menuCards.length) return;
-
-  let currentCategory = 'all';
-
-  function filterMenus() {
-    const keyword = searchInput.value.trim().toLowerCase();
-    clearBtn.hidden = keyword.length === 0;
-
-    let visibleCount = 0;
-
-    menuCards.forEach((card) => {
-      const cardCategory = card.dataset.category;
-      const cardName = card.dataset.name.toLowerCase();
-
-      const matchCategory = currentCategory === 'all' || cardCategory === currentCategory;
-      const matchKeyword = cardName.includes(keyword);
-
-      if (matchCategory && matchKeyword) {
-        card.hidden = false;
-        visibleCount++;
-      } else {
-        card.hidden = true;
-      }
-    });
-
-    if (menuCountEl) menuCountEl.textContent = visibleCount;
-    if (menuEmptyEl) menuEmptyEl.hidden = visibleCount > 0;
-  }
-
-  searchInput.addEventListener('input', filterMenus);
-
-  clearBtn.addEventListener('click', () => {
-    searchInput.value = '';
-    filterMenus();
-    searchInput.focus();
-  });
-
-  categoryTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      categoryTabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentCategory = tab.dataset.category;
-      filterMenus();
-    });
-  });
-});

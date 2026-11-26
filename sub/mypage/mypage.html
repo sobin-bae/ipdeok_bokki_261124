@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지 - 입덕볶이</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="css/mypage.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <a href="../../index.html" class="btn-back" aria-label="뒤로가기">←</a>
+        <a href="../../index.html" class="logo-link">
+          <img src="../../Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
+          <span class="logo-text">입덕볶이</span>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="mypage.html" class="user-icon-btn is-logged-in" id="headerUserBtn" aria-label="마이페이지">
+          <i data-lucide="user-check"></i>
+        </a>
+        <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <aside class="slide-drawer" id="slideDrawer">
+      <div>
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
+          </div>
+          <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
+        </div>
+        <nav class="drawer-nav">
+          <a href="../lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="#"><span>소개</span><span>›</span></a>
+          <a href="#"><span>커뮤니티</span><span>›</span></a>
+          <a href="../login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="mypage.html"><span>마이페이지</span><span>›</span></a>
+        </nav>
+      </div>
+      <div class="drawer-footer">
+        <strong>입덕볶이 고객센터</strong>
+        영업시간 11:00 ~ 23:30
+      </div>
+    </aside>
+
+    <main class="mypage-main">
+      <!-- 1. 회원 프로필 & 닉네임 수정 -->
+      <section class="mp-card profile-card">
+        <div class="profile-top">
+          <div class="profile-avatar">
+            <i data-lucide="user-check"></i>
+          </div>
+          <div class="profile-meta">
+            <span class="member-badge" id="mypageProviderBadge">단골 회원</span>
+            <h1 id="mypageNickname">회원님, 환영합니다!</h1>
+            <p id="mypageUserId">아이디: -</p>
+          </div>
+          <button type="button" class="btn-mini-edit" id="toggleNickEditBtn">닉네임 수정</button>
+        </div>
+
+        <form class="inline-edit-form" id="nickEditForm" hidden>
+          <input type="text" id="newNicknameInput" placeholder="새 닉네임을 입력하세요" maxlength="14">
+          <button type="submit" class="btn-mini-save">저장</button>
+        </form>
+      </section>
+
+      <!-- 2. 보유 쿠폰 & 장바구니 요약 -->
+      <section class="summary-grid">
+        <a href="../cart/cart.html" class="summary-box">
+          <div class="summary-box__head">
+            <i data-lucide="shopping-cart"></i>
+            <span>현재 장바구니</span>
+          </div>
+          <strong id="mypageCartCount">0개</strong>
+          <small id="mypageCartPrice">0원</small>
+        </a>
+
+        <div class="summary-box">
+          <div class="summary-box__head">
+            <i data-lucide="ticket"></i>
+            <span>보유 할인 쿠폰</span>
+          </div>
+          <strong>2장 사용 가능</strong>
+          <small>최대 3,000원 할인</small>
+        </div>
+      </section>
+
+      <!-- 3. 보유 쿠폰 상세 카드 -->
+      <section class="mp-card">
+        <div class="mp-card-head">
+          <h2><i data-lucide="ticket"></i> 내 쿠폰함</h2>
+          <span class="mp-pill">결제 시 자동 적용</span>
+        </div>
+        <div class="coupon-list">
+          <div class="coupon-item">
+            <div>
+              <strong>🎉 첫 주문 3,000원 즉시 할인 쿠폰</strong>
+              <p>전 메뉴 주문 시 사용 가능 (2026.12.31까지)</p>
+            </div>
+            <span class="coupon-val">-3,000원</span>
+          </div>
+          <div class="coupon-item">
+            <div>
+              <strong>🎟️ 떡볶이 단골 2,000원 할인 쿠폰</strong>
+              <p>10,000원 이상 주문 시 사용 가능</p>
+            </div>
+            <span class="coupon-val">-2,000원</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. 기본 배달 주소 관리 -->
+      <section class="mp-card">
+        <div class="mp-card-head">
+          <h2><i data-lucide="map-pin"></i> 기본 배달 주소</h2>
+          <button type="button" class="btn-mini-edit" id="toggleAddrEditBtn">주소 변경</button>
+        </div>
+        <div class="addr-display" id="addrDisplayBox">
+          <strong id="mypageAddrMain">인천광역시 연수구 송도동 123-45</strong>
+          <p id="mypageAddrDetail">입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요</p>
+        </div>
+        <form class="addr-edit-form" id="addrEditForm" hidden>
+          <input type="text" id="addrMainInput" placeholder="도로명/지번 주소 입력" required>
+          <input type="text" id="addrDetailInput" placeholder="상세 주소 및 요청사항 입력" required>
+          <button type="submit" class="btn-mini-save full">배달 주소 저장하기</button>
+        </form>
+      </section>
+
+      <!-- 5. 최근 주문 내역 & 바로 재주문 -->
+      <section class="mp-card">
+        <div class="mp-card-head">
+          <h2><i data-lucide="receipt"></i> 최근 주문 내역</h2>
+        </div>
+        <div class="recent-order-box">
+          <div class="recent-order-info">
+            <strong id="mypageLastOrderTitle">아직 주문 내역이 없습니다</strong>
+            <p id="mypageLastOrderMeta">첫 주문을 진행하면 여기에 내역이 기록됩니다.</p>
+          </div>
+          <button type="button" class="btn-reorder" id="reorderBtn" hidden>다시 담기</button>
+        </div>
+      </section>
+
+      <!-- 6. 하단 버튼 -->
+      <section class="mypage-actions">
+        <a href="../lists/lists.html" class="btn-action-red mypage-menu-btn">
+          <i data-lucide="utensils"></i>
+          <span>전체 메뉴 주문하러 가기</span>
+        </a>
+        <button type="button" class="btn-mypage-logout" id="mypageLogoutBtn">
+          <i data-lucide="log-out"></i>
+          <span>로그아웃</span>
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      const activeUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      if (!activeUser || !activeUser.id) {
+        location.replace('../login/login.html');
+        return;
+      }
+
+      const nicknameEl = document.getElementById('mypageNickname');
+      const userIdEl = document.getElementById('mypageUserId');
+      const providerBadgeEl = document.getElementById('mypageProviderBadge');
+      const toggleNickEditBtn = document.getElementById('toggleNickEditBtn');
+      const nickEditForm = document.getElementById('nickEditForm');
+      const newNicknameInput = document.getElementById('newNicknameInput');
+
+      function renderProfile(user) {
+        const nick = user.nickname || user.id;
+        if (nicknameEl) nicknameEl.textContent = `${nick}님, 환영합니다!`;
+        if (userIdEl) userIdEl.textContent = `아이디: ${user.id}`;
+        if (providerBadgeEl) providerBadgeEl.textContent = user.provider || '단골 회원';
+      }
+
+      renderProfile(activeUser);
+
+      // 닉네임 수정
+      if (toggleNickEditBtn && nickEditForm) {
+        toggleNickEditBtn.addEventListener('click', () => {
+          nickEditForm.hidden = !nickEditForm.hidden;
+          if (!nickEditForm.hidden) {
+            newNicknameInput.value = activeUser.nickname || activeUser.id;
+            newNicknameInput.focus();
+          }
+        });
+
+        nickEditForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const trimmed = newNicknameInput.value.trim();
+          if (!trimmed) return;
+          activeUser.nickname = trimmed;
+          setCurrentUser(activeUser);
+
+          // 일반 가입자 목록에도 닉네임 반영
+          const users = getUsers();
+          const idx = users.findIndex((u) => u.id === activeUser.id);
+          if (idx !== -1) {
+            users[idx].nickname = trimmed;
+            saveUsers(users);
+          }
+
+          renderProfile(activeUser);
+          nickEditForm.hidden = true;
+        });
+      }
+
+      // 장바구니 요약
+      const cart = getCart();
+      const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      const totalAmount = cart.reduce((sum, item) => sum + (item.unitPrice || 0) * (item.qty || 1), 0);
+      document.getElementById('mypageCartCount').textContent = `${totalQty}개`;
+      document.getElementById('mypageCartPrice').textContent = formatPrice(totalAmount);
+
+      // 기본 배달 주소 로드 및 수정
+      const addrMainEl = document.getElementById('mypageAddrMain');
+      const addrDetailEl = document.getElementById('mypageAddrDetail');
+      const toggleAddrEditBtn = document.getElementById('toggleAddrEditBtn');
+      const addrEditForm = document.getElementById('addrEditForm');
+      const addrMainInput = document.getElementById('addrMainInput');
+      const addrDetailInput = document.getElementById('addrDetailInput');
+
+      const savedAddr = getDefaultAddress();
+      addrMainEl.textContent = savedAddr.main;
+      addrDetailEl.textContent = savedAddr.detail;
+
+      toggleAddrEditBtn.addEventListener('click', () => {
+        addrEditForm.hidden = !addrEditForm.hidden;
+        if (!addrEditForm.hidden) {
+          const cur = getDefaultAddress();
+          addrMainInput.value = cur.main;
+          addrDetailInput.value = cur.detail;
+          addrMainInput.focus();
+        }
+      });
+
+      addrEditForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const mainVal = addrMainInput.value.trim();
+        const detailVal = addrDetailInput.value.trim();
+        if (!mainVal || !detailVal) return;
+        saveDefaultAddress({ main: mainVal, detail: detailVal });
+        addrMainEl.textContent = mainVal;
+        addrDetailEl.textContent = detailVal;
+        addrEditForm.hidden = true;
+      });
+
+      // 최근 주문 내역 & 다시 담기
+      const lastOrderTitleEl = document.getElementById('mypageLastOrderTitle');
+      const lastOrderMetaEl = document.getElementById('mypageLastOrderMeta');
+      const reorderBtn = document.getElementById('reorderBtn');
+
+      try {
+        const lastOrder = JSON.parse(localStorage.getItem('ipdeok_last_order'));
+        if (lastOrder && lastOrder.menuTitle) {
+          lastOrderTitleEl.textContent = lastOrder.menuTitle;
+          lastOrderMetaEl.textContent = `${formatPrice(lastOrder.totalPrice || 0)} · ${lastOrder.method || '결제완료'}`;
+          reorderBtn.hidden = false;
+
+          reorderBtn.addEventListener('click', () => {
+            const matchedMenu = Object.values(MENU_DATA).find((m) => lastOrder.menuTitle.includes(m.name)) || MENU_DATA.cheese;
+            const curCart = getCart();
+            curCart.push({
+              id: matchedMenu.id,
+              name: matchedMenu.name,
+              img: matchedMenu.img,
+              basePrice: matchedMenu.price,
+              spice: '보통맛',
+              toppings: [],
+              unitPrice: matchedMenu.price,
+              qty: 1
+            });
+            saveCart(curCart);
+            location.href = '../cart/cart.html';
+          });
+        }
+      } catch (e) {}
+
+      // 로그아웃
+      document.getElementById('mypageLogoutBtn').addEventListener('click', () => {
+        logoutUser();
+        location.href = '../login/login.html';
+      });
+
+      syncAuthUI();
+    })();
+  </script>
+</body>
+</html>

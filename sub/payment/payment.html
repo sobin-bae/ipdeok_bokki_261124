@@ -6,6 +6,7 @@
   <title>주문 및 결제 - 입덕볶이</title>
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="css/payment.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
   <div class="app-wrap">
@@ -18,6 +19,13 @@
         </a>
       </div>
       <div class="header-actions">
+        <a href="../login/login.html" class="user-icon-btn" id="headerUserBtn" aria-label="로그인">
+          <i data-lucide="user"></i>
+        </a>
+        <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
+        </a>
         <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
           <span></span><span></span><span></span>
         </button>
@@ -30,21 +38,17 @@
         <div class="drawer-top">
           <div class="drawer-brand">
             <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
-            
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
           </div>
           <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
         </div>
         <nav class="drawer-nav">
-                   <!-- <a href="index.html"><span>🏠 홈으로</span><span>›</span></a> -->
-          <a href="sub/lists/lists.html"><span>메뉴</span><span></span></a>
-          <!-- <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
-          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
-          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
-          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a> -->
-          <a href="#">소개</a>
-          <a href="#">커뮤니티</a>
-          <a href="#">로그인</a>
-          </nav>
+          <a href="../lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="#"><span>소개</span><span>›</span></a>
+          <a href="#"><span>커뮤니티</span><span>›</span></a>
+          <a href="../login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="../mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
+        </nav>
       </div>
       <div class="drawer-footer">
         <strong>입덕볶이 고객센터</strong>
@@ -55,8 +59,8 @@
     <section class="pay-box">
       <h2>배달 주소</h2>
       <div class="address-card">
-        <strong>인천광역시 연수구 송도동 123-45</strong>
-        <p>입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요</p>
+        <strong id="payAddrMain">인천광역시 연수구 송도동 123-45</strong>
+        <p id="payAddrDetail">입덕아파트 101동 1204호 · 문 앞에 두고 벨 눌러주세요</p>
       </div>
     </section>
 
@@ -81,26 +85,26 @@
     </section>
 
     <section class="pay-box">
-  <h2>결제 수단</h2>
-  <div class="pay-method-grid" id="payMethodGrid">
-    <label class="pay-method active">
-      <input type="radio" name="payMethod" value="토스페이" checked>
-      <span>토스페이</span>
-    </label>
-    <label class="pay-method">
-      <input type="radio" name="payMethod" value="카카오페이">
-      <span>카카오페이</span>
-    </label>
-    <label class="pay-method">
-      <input type="radio" name="payMethod" value="신용/체크카드">
-      <span>신용/체크카드</span>
-    </label>
-    <label class="pay-method">
-      <input type="radio" name="payMethod" value="네이버페이">
-      <span>네이버페이</span>
-    </label>
-  </div>
-</section>
+      <h2>결제 수단</h2>
+      <div class="pay-method-grid" id="payMethodGrid">
+        <label class="pay-method active">
+          <input type="radio" name="payMethod" value="토스페이" checked>
+          <span>토스페이</span>
+        </label>
+        <label class="pay-method">
+          <input type="radio" name="payMethod" value="카카오페이">
+          <span>카카오페이</span>
+        </label>
+        <label class="pay-method">
+          <input type="radio" name="payMethod" value="신용/체크카드">
+          <span>신용/체크카드</span>
+        </label>
+        <label class="pay-method">
+          <input type="radio" name="payMethod" value="네이버페이">
+          <span>네이버페이</span>
+        </label>
+      </div>
+    </section>
 
     <section class="pay-box no-border">
       <div class="final-price-card">
@@ -117,10 +121,14 @@
 
   <script src="../../app.js"></script>
   <script>
+    const addr = getDefaultAddress();
+    document.getElementById('payAddrMain').textContent = addr.main;
+    document.getElementById('payAddrDetail').textContent = addr.detail;
+
     const cart = getCart();
     const firstItem = cart[0] || {
       name: '눈꽃치즈 매운 떡볶이',
-      img: 'images/tteokbokki-main.png',
+      img: 'Imgs/tteokbokki-main.png',
       spice: '보통맛',
       toppings: [],
       unitPrice: 10500,
@@ -175,7 +183,7 @@
         totalPrice: finalAmount,
         method: method
       }));
-      <a href="../payment_finish/payment_finish.html" class="btn-action-red" id="submitPayBtn">10,500원 결제하기</a>
+      location.href = '../payment_finish/payment_finish.html';
     });
   </script>
 </body>

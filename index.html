@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>입덕볶이 - 한 입에 반하는 매콤달콤 떡볶이</title>
+  <title>입덕볶이 - 매콤달콤 중독 떡볶이</title>
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
   <div class="app-wrap">
+    <!-- 헤더 -->
     <header class="site-header">
       <div class="header-left">
         <a href="index.html" class="logo-link">
-          <img src="Imgs/logo-mascot.png" alt="입덕볶이 캐릭터 로고" class="logo-img">
+          <img src="Imgs/logo-mascot.png" alt="입덕볶이 로고" class="logo-img">
           <span class="logo-text">입덕볶이</span>
         </a>
       </div>
       <div class="header-actions">
+        <a href="sub/login/login.html" class="user-icon-btn" id="headerUserBtn" aria-label="로그인">
+          <i data-lucide="user"></i>
+        </a>
         <a href="sub/cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
-          🛒<span class="cart-badge">0</span>
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
         </a>
         <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
           <span></span><span></span><span></span>
@@ -26,27 +32,23 @@
       </div>
     </header>
 
-
+    <!-- 슬라이드 메뉴 오버레이 & 드로어 -->
     <div class="menu-overlay" id="menuOverlay"></div>
     <aside class="slide-drawer" id="slideDrawer">
       <div>
         <div class="drawer-top">
           <div class="drawer-brand">
-            <img src="Imgs/logo-mascot.png"로고 class="logo-img">
-            
+            <img src="Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
           </div>
           <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
         </div>
         <nav class="drawer-nav">
-          <!-- <a href="index.html"><span>🏠 홈으로</span><span>›</span></a> -->
-          <a href="sub/lists/lists.html"><span>메뉴</span><span></span></a>
-          <!-- <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
-          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
-          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
-          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a> -->
-          <a href="#">소개</a>
-          <a href="#">커뮤니티</a>
-          <a href="#">로그인</a>
+          <a href="sub/lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="#"><span>소개</span><span>›</span></a>
+          <a href="#"><span>커뮤니티</span><span>›</span></a>
+          <a href="sub/login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="sub/mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
         </nav>
       </div>
       <div class="drawer-footer">
@@ -56,16 +58,16 @@
       </div>
     </aside>
 
-    <!-- 상단 히어로 배너 -->
+    <!-- 상단 메인 배너 -->
     <section class="hero-banner">
-      <img src="Imgs/main-top-tteokbokki-v2.png" alt="입덕볶이 대표 떡볶이">
+      <img src="Imgs/main-top-tteokbokki-v2.png" alt="입덕볶이 메인 떡볶이">
       <div class="main-hero-img">
-        <span class="hero-badge">오늘의 인기 1위</span>
-        <h1>한 입 먹는 순간 바로 입덕!<br>특제 숙성 국물 떡볶이</h1>
+        <span class="hero-badge">한 입 먹으면 출구 없는 맛</span>
+        <h1>매콤달콤에 빠지는 순간,<br>입덕볶이</h1>
       </div>
     </section>
 
-    <!-- Section 1: 주문 및 쿠폰 버튼 -->
+    <!-- 배달 주문 / 전화 주문 / 쿠폰 사용 -->
     <section class="section-order">
       <div class="order-btn-group">
         <a href="sub/lists/lists.html" class="btn-order btn-primary btn-full">🛵 배달 주문하기</a>
@@ -76,7 +78,7 @@
       </div>
     </section>
 
-    <!-- Section 2: 추천 메뉴 -->
+    <!-- 추천 메뉴 (회전형 커버플로우) -->
     <section class="section-recommend">
       <div class="section-head">
         <h2>추천 메뉴</h2>
@@ -86,29 +88,31 @@
         </div>
       </div>
 
-      <div class="recommend-track" id="recommendTrack">
-        <a href="sub/detail/detail.html?menu=original" class="rec-card" data-index="0">
-          <span class="rec-tag">BEST 1</span>
-          <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=500&q=80" alt="입덕 오리지널 떡볶이">
-          <h3>입덕 오리지널</h3>
-          <p>8,500원</p>
-        </a>
-        <a href="sub/detail/detail.html?menu=cheese" class="rec-card active" data-index="1">
-          <span class="rec-tag">BEST 2</span>
-          <img src="Imgs/tteokbokki-main.png" alt="눈꽃치즈 매운 떡볶이">
-          <h3>눈꽃치즈 매운 떡볶이</h3>
-          <p>10,500원</p>
-        </a>
-        <a href="sub/detail/detail.html?menu=rose" class="rec-card" data-index="2">
-          <span class="rec-tag">BEST 3</span>
-          <img src="Imgs/tteokbokki-rose.png" alt="베이컨 로제 떡볶이">
-          <h3>베이컨 로제 떡볶이</h3>
-          <p>11,500원</p>
-        </a>
+      <div class="recommend-stage" id="recommendStage">
+        <div class="recommend-track" id="recommendTrack">
+          <a href="sub/detail/detail.html?menu=original" class="rec-card" data-index="0">
+            <span class="rec-tag">BEST 1</span>
+            <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=500&q=80" alt="입덕 오리지널 떡볶이">
+            <h3>입덕 오리지널</h3>
+            <p>8,500원</p>
+          </a>
+          <a href="sub/detail/detail.html?menu=cheese" class="rec-card pos-center" data-index="1">
+            <span class="rec-tag">BEST 2</span>
+            <img src="Imgs/tteokbokki-main.png" alt="눈꽃치즈 매운 떡볶이">
+            <h3>눈꽃치즈 매운 떡볶이</h3>
+            <p>10,500원</p>
+          </a>
+          <a href="sub/detail/detail.html?menu=rose" class="rec-card" data-index="2">
+            <span class="rec-tag">BEST 3</span>
+            <img src="Imgs/tteokbokki-rose.png" alt="베이컨 로제 떡볶이">
+            <h3>베이컨 로제 떡볶이</h3>
+            <p>11,500원</p>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Section 3: 메뉴 그리드 -->
+    <!-- 메뉴 (2열 그리드) -->
     <section class="section-menu">
       <div class="section-head">
         <h2>메뉴</h2>
@@ -116,7 +120,7 @@
       </div>
       <div class="menu-grid">
         <a href="sub/detail/detail.html?menu=original" class="menu-card">
-          <img src=https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=400&q=80" alt="입덕 오리지널 떡볶이">
+          <img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=400&q=80" alt="입덕 오리지널 떡볶이">
           <div class="menu-card-info">
             <strong>입덕 오리지널</strong>
             <span>8,500원</span>
@@ -137,16 +141,27 @@
           </div>
         </a>
         <a href="sub/detail/detail.html?menu=side" class="menu-card fried-card-fix">
-      <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="바삭 모둠 튀김">
-      <div class="fried-card-text">
-      <strong class="fried-title">바삭 모둠 튀김</strong>
-      <span class="fried-price">10,500원</span>
-    </div>
-      </a>
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="바삭 모둠 튀김">
+          <div class="fried-card-text">
+            <strong class="fried-title">바삭 모둠 튀김</strong>
+            <span class="fried-price">10,500원</span>
+          </div>
+        </a>
       </div>
     </section>
 
-    <!-- Section 4: 이벤트 -->
+    <!-- 왜 '입덕볶이'일까요? -->
+    <section class="section-story">
+      <span class="story-label">IPDEOK STORY</span>
+      <h2>왜 '입덕볶이'일까요?</h2>
+      <p>
+        단순히 맵기만 한 떡볶이가 아니라, 첫입의 달콤함과 끝맛의 칼칼함,
+        그리고 쫀득한 식감이 조화를 이루어 계속 생각나는 맛을 연구했습니다.
+        오늘 하루의 스트레스를 입덕볶이 한 접시로 녹여보세요.
+      </p>
+    </section>
+
+    <!-- 오픈 이벤트 -->
     <section class="section-event" id="eventSection">
       <div class="section-head">
         <h2>이벤트</h2>
@@ -170,7 +185,7 @@
 
       <div class="event-panel" id="panel-ended">
         <div class="event-banner-card ended">
-          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80" alt="종료된 이벤트">
+          <img src="Imgs/tteokbokki-main.png" alt="종료된 이벤트" class="ended-thumb-img">
           <div class="event-banner-body">
             <span class="event-pill ended">종료됨</span>
             <h3>[마감] 오픈 기념 매운맛 떡볶이 1+1 프로모션</h3>
@@ -194,6 +209,7 @@
       </div>
     </section>
 
+    <!-- 푸터 -->
     <footer class="site-footer">
       <strong>(주)입덕볶이 에프앤비</strong>
       인천광역시 연수구 송도동 123-45 | 대표: 김입덕<br>
@@ -203,36 +219,48 @@
 
   <script src="app.js"></script>
   <script>
-    const cards = document.querySelectorAll('.rec-card');
-    let currentRec = 1;
+    (function () {
+      const cards = Array.from(document.querySelectorAll('#recommendTrack .rec-card'));
+      let centerIdx = 1;
 
-    function renderRecommend(idx) {
-      cards.forEach((c, i) => {
-        c.classList.toggle('active', i === idx);
+      function renderCarousel() {
+        const total = cards.length;
+        cards.forEach((card, i) => {
+          card.classList.remove('pos-center', 'pos-left', 'pos-right');
+          if (i === centerIdx) {
+            card.classList.add('pos-center');
+          } else if ((centerIdx - 1 + total) % total === i) {
+            card.classList.add('pos-left');
+          } else {
+            card.classList.add('pos-right');
+          }
+        });
+      }
+
+      document.getElementById('recPrevBtn').addEventListener('click', () => {
+        centerIdx = (centerIdx - 1 + cards.length) % cards.length;
+        renderCarousel();
       });
-    }
 
-    document.getElementById('recPrevBtn').addEventListener('click', () => {
-      currentRec = (currentRec - 1 + cards.length) % cards.length;
-      renderRecommend(currentRec);
-    });
-
-    document.getElementById('recNextBtn').addEventListener('click', () => {
-      currentRec = (currentRec + 1) % cards.length;
-      renderRecommend(currentRec);
-    });
-
-    const tabs = document.querySelectorAll('.event-tab');
-    const panels = document.querySelectorAll('.event-panel');
-
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.classList.remove('active'));
-        panels.forEach((p) => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      document.getElementById('recNextBtn').addEventListener('click', () => {
+        centerIdx = (centerIdx + 1) % cards.length;
+        renderCarousel();
       });
-    });
+
+      renderCarousel();
+
+      const tabs = document.querySelectorAll('.event-tab');
+      const panels = document.querySelectorAll('.event-panel');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('active'));
+          panels.forEach((p) => p.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+        });
+      });
+    })();
   </script>
 </body>
 </html>

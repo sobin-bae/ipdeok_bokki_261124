@@ -6,6 +6,7 @@
   <title>메뉴 상세 & 옵션 선택 - 입덕볶이</title>
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="css/detail.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     .combo-tip-box {
       margin-top: 10px;
@@ -29,6 +30,13 @@
       font-size: 11px;
       font-weight: 700;
     }
+    .spice-sub-desc {
+      display: block;
+      font-size: 11px;
+      color: #777777;
+      margin-top: 2px;
+      line-height: 1.35;
+    }
   </style>
 </head>
 <body>
@@ -42,8 +50,12 @@
         </a>
       </div>
       <div class="header-actions">
+        <a href="../login/login.html" class="user-icon-btn" id="headerUserBtn" aria-label="로그인">
+          <i data-lucide="user"></i>
+        </a>
         <a href="../cart/cart.html" class="cart-icon-btn" aria-label="장바구니">
-          🛒<span class="cart-badge">0</span>
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge">0</span>
         </a>
         <button type="button" class="hamburger-btn" id="openMenuBtn" aria-label="전체 메뉴">
           <span></span><span></span><span></span>
@@ -57,20 +69,17 @@
         <div class="drawer-top">
           <div class="drawer-brand">
             <img src="../../Imgs/logo-mascot.png" alt="로고" class="logo-img">
+            <span class="drawer-member-name" id="drawerUserName" hidden></span>
           </div>
           <button type="button" class="drawer-close" id="closeMenuBtn">&times;</button>
         </div>
         <nav class="drawer-nav">
-                 <!-- <a href="index.html"><span>🏠 홈으로</span><span>›</span></a> -->
-          <a href="sub/lists/lists.html"><span>메뉴</span><span></span></a>
-          <!-- <a href="sub/detail/detail.html?menu=cheese"><span>🌶️ 인기 메뉴 상세보기</span><span>›</span></a>
-          <a href="sub/cart/cart.html"><span>🛒 장바구니 확인</span><span>›</span></a>
-          <a href="sub/payment/payment.html"><span>💳 결제하기</span><span>›</span></a>
-          <a href="sub/payment_finish/payment_finish.html"><span>✅ 결제 완료</span><span>›</span></a> -->
-          <a href="#">소개</a>
-          <a href="#">커뮤니티</a>
-          <a href="#">로그인</a>
-          </nav>
+          <a href="../lists/lists.html"><span>메뉴</span><span>›</span></a>
+          <a href="#"><span>소개</span><span>›</span></a>
+          <a href="#"><span>커뮤니티</span><span>›</span></a>
+          <a href="../login/login.html"><span>로그인</span><span>›</span></a>
+          <a href="../mypage/mypage.html"><span>마이페이지</span><span>›</span></a>
+        </nav>
       </div>
       <div class="drawer-footer">
         <strong>입덕볶이 고객센터</strong>
@@ -149,7 +158,6 @@
     const extraTitleEl = document.getElementById('extraOptionTitle');
     const extraListEl = document.getElementById('extraOptionList');
 
-    // 사이드 메뉴 찍먹 소스 기본 목록 (개별 가격 포함)
     const defaultSideSauces = [
       { name: '기본 간장소스', price: 0 },
       { name: '매콤달콤 양념소스', price: 500 },
@@ -178,10 +186,34 @@
             checked: false
           }))
         : [
-            { value: '순한맛', label: '🌶️ 순한맛', price: 0, checked: false },
-            { value: '보통맛', label: '🌶️🌶️ 보통맛', price: 0, checked: true },
-            { value: '매운맛', label: '🌶️🌶️🌶️ 매운맛', price: 0, checked: false },
-            { value: '아주 매운맛', label: '🔥 아주 매운맛', price: 0, checked: false }
+            {
+              value: '순한맛',
+              label: '🌶️ 순한맛',
+              subDesc: '진라면 순한맛~신라면 살짝 아래 정도의 은은한 매콤함',
+              price: 0,
+              checked: false
+            },
+            {
+              value: '보통맛',
+              label: '🌶️🌶️ 보통맛',
+              subDesc: '신라면과 비슷한 수준의 기분 좋은 매콤달콤함',
+              price: 0,
+              checked: true
+            },
+            {
+              value: '매운맛',
+              label: '🌶️🌶️🌶️ 매운맛',
+              subDesc: '신라면보다 확실히 맵고 불닭볶음면 앞단계 수준의 화끈함',
+              price: 0,
+              checked: false
+            },
+            {
+              value: '아주 매운맛',
+              label: '🔥 아주 매운맛',
+              subDesc: '불닭볶음면 이상급의 강렬한 매운맛 (매운맛 마니아 추천)',
+              price: 0,
+              checked: false
+            }
           ];
 
     const extraOptions = isDrink
@@ -211,7 +243,6 @@
     primaryTitleEl.textContent = isDrink ? '온도 / 얼음 선택' : (isSide ? '찍먹 소스 선택' : '맛 선택');
     extraTitleEl.textContent = isDrink ? '곁들임 옵션' : (isSide ? '사이드 추가 옵션' : '토핑 추가');
 
-    // 사이드는 찍먹 소스를 '필수'가 아닌 '선택' 배지로 전환
     if (isSide) {
       primaryPillEl.textContent = '선택';
       primaryPillEl.className = 'optional-pill';
@@ -220,7 +251,6 @@
       primaryPillEl.className = 'required-pill';
     }
 
-    // 사이드는 찍먹 소스를 체크박스(선택)로, 떡볶이·음료는 라디오(필수)로 렌더링
     if (isSide) {
       primaryListEl.innerHTML = primaryOptions.map((opt) => `
         <label class="option-item">
@@ -236,7 +266,10 @@
         <label class="option-item">
           <div class="option-left">
             <input type="radio" name="spice" value="${opt.value}" ${opt.checked ? 'checked' : ''}>
-            <span>${opt.label}</span>
+            <div>
+              <span>${opt.label}</span>
+              ${opt.subDesc ? `<small class="spice-sub-desc">${opt.subDesc}</small>` : ''}
+            </div>
           </div>
           <span class="option-price">+0원</span>
         </label>
